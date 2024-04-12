@@ -1,7 +1,7 @@
-module com.example {
+module com.app.voorraadbeheer {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens com.example to javafx.fxml;
-    exports com.example;
+    opens com.app.voorraadbeheer to javafx.fxml;
+    exports com.app.voorraadbeheer;
 }
