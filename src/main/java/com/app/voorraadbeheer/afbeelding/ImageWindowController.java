@@ -1,4 +1,5 @@
 package com.app.voorraadbeheer.afbeelding;
+import com.app.voorraadbeheer.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +20,6 @@ import java.io.IOException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
-import com.voorraadbeheer.PrimaryController;
 
 
 
