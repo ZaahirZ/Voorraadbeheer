@@ -37,19 +37,15 @@ public class PrimaryController {
 
     public void openNewWindow() {
         try {
-            // Load the FXML file for the new window
             FXMLLoader loader = new FXMLLoader(getClass().getResource("NewWindow.fxml"));
             Parent root = loader.load();
 
-            // Create a new stage
             Stage stage = new Stage();
             stage.setTitle("New Window");
 
-            // Set the scene for the new stage
             Scene scene = new Scene(root);
             stage.setScene(scene);
 
-            // Show the new stage
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
