@@ -13,7 +13,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.io.File;
 import java.io.IOException;
@@ -130,14 +133,15 @@ public class ImageWindowController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
         File imageFile = fileChooser.showOpenDialog(null);
         if (imageFile != null) {
-            
             String newName = "newName" + getFileExtension(imageFile);
+            File imagesDir = Paths.get(System.getProperty("user.dir"), "voorraadbeheer", "images").toFile();
+            File destFile = new File(imagesDir, newName);
     
-            File renamedFile = new File(imageFile.getParent() + File.separator + newName);
-    
-            boolean renamed = imageFile.renameTo(renamedFile);
-            if (!renamed) {
-                System.out.println("Failed to rename the file");
+            try {
+                Files.copy(imageFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                selectImageLoad(); //refresh the window
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
