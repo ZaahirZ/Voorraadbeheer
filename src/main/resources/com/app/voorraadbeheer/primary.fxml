@@ -13,7 +13,7 @@
          <Pane prefHeight="285.0" prefWidth="800.0">
             <children>
                <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" />
-               <Button id="DeleteImage" layoutX="512.0" layoutY="143.0" mnemonicParsing="false" text="Delete" />
+               <Button fx:id="deleteImage" layoutX="512.0" layoutY="143.0" mnemonicParsing="false" text="Delete" onAction="#deleteImage" />
             </children>
          </Pane>
       </children></VBox>

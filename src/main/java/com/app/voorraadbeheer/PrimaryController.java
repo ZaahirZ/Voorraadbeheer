@@ -15,6 +15,12 @@ import javafx.scene.image.ImageView;
 
 public class PrimaryController {
 
+
+
+    public void initialize() {
+        deleteImage.setVisible(false);
+    }
+
     @FXML
     private AnchorPane Primary;
     @FXML
@@ -50,5 +56,10 @@ public class PrimaryController {
             imageView.setImage(null);
             deleteImage.setVisible(false);
         }
+    }
+
+    public void deleteImage() {
+        imageView.setImage(null);
+        deleteImage.setVisible(false);
     }
 }
