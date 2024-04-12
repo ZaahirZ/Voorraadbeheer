@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="Primary" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PrimaryController">
-
-    <VBox fx:id="uploadContainer" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-
-     <Button layoutX="336.0" layoutY="288.0" onAction="#openImageWindow" text="Open Image Window" />
+    <!-- Container for uploading images -->
+    <VBox fx:id="uploadContainer" prefHeight="600.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+         <Pane prefHeight="285.0" prefWidth="800.0">
+            <children>
+               <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+         </Pane>
+      </children></VBox>
+     <!-- UI elements for image uploading -->
+     <Button alignment="CENTER" layoutX="336.0" layoutY="288.0" onAction="#openImageWindow" text="Open Image Window" />
 
 </AnchorPane>

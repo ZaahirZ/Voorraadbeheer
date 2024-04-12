@@ -1,20 +1,25 @@
-package com.example;
+package com.app.voorraadbeheer.afbeelding;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
-
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.io.File;
+import java.io.IOException;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
+import com.voorraadbeheer.PrimaryController;
 
 
 
@@ -22,6 +27,9 @@ public class ImageWindowController {
 
     @FXML
     private ListView<File> imageListView;
+
+    
+    private File selectedImage;
 
     public void initialize() {
         File imagesDir = Paths.get(System.getProperty("user.dir"), "voorraadbeheer", "images").toFile();
@@ -31,6 +39,11 @@ public class ImageWindowController {
         }
 
         setCustomCellFactory();
+
+        // Set the selected image when the user clicks on an item in the list view
+        imageListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedImage = newValue;
+        });
     }
 
     public void setCustomCellFactory() {
@@ -127,4 +140,22 @@ public class ImageWindowController {
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex);
     }
-}
+
+    public void submit() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+            Parent root = loader.load();
+            PrimaryController primaryController = loader.getController();
+            if (selectedImage != null) {
+                primaryController.setImage(selectedImage);
+            }
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) imageListView.getScene().getWindow(); 
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}    
+
