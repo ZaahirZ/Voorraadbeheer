@@ -3,6 +3,7 @@ package com.app.voorraadbeheer;
 import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +21,8 @@ public class PrimaryController {
     private ImageView imageView;
     @FXML
     private FlowPane imageDisplayContainer;
+    @FXML
+    private Button deleteImage;
 
     public Label createLabel(String text) {
         Label label = new Label(text);
@@ -42,6 +45,10 @@ public class PrimaryController {
         if (imageFile != null) {
             Image image = new Image(imageFile.toURI().toString());
             imageView.setImage(image);
+            deleteImage.setVisible(true);
+        }else{
+            imageView.setImage(null);
+            deleteImage.setVisible(false);
         }
     }
 }

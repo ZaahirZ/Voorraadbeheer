@@ -32,18 +32,25 @@ public class ImageWindowController {
     private File selectedImage;
 
     public void initialize() {
+        selectImageLoad();
+        setCustomCellFactory();
+
+        // Set the selected image when the user clicks on an item in the list view
+        ClickListenerImage();
+    }
+
+    private void ClickListenerImage() {
+        imageListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedImage = newValue;
+        });
+    }
+
+    private void selectImageLoad(){
         File imagesDir = Paths.get(System.getProperty("user.dir"), "voorraadbeheer", "images").toFile();
         if (imagesDir.exists() && imagesDir.isDirectory()) {
             ObservableList<File> imageFiles = FXCollections.observableArrayList(imagesDir.listFiles());
             imageListView.setItems(imageFiles);
         }
-
-        setCustomCellFactory();
-
-        // Set the selected image when the user clicks on an item in the list view
-        imageListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            selectedImage = newValue;
-        });
     }
 
     public void setCustomCellFactory() {
@@ -143,7 +150,7 @@ public class ImageWindowController {
 
     public void submit() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/app/voorraadbeheer/primary.fxml"));
             Parent root = loader.load();
             PrimaryController primaryController = loader.getController();
             if (selectedImage != null) {

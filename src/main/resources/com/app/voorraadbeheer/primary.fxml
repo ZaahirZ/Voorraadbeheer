@@ -6,13 +6,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="Primary" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PrimaryController">
+<AnchorPane fx:id="Primary" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.voorraadbeheer.PrimaryController">
     <!-- Container for uploading images -->
     <VBox fx:id="uploadContainer" prefHeight="600.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
          <Pane prefHeight="285.0" prefWidth="800.0">
             <children>
                <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" />
+               <Button id="DeleteImage" layoutX="512.0" layoutY="143.0" mnemonicParsing="false" text="Delete" />
             </children>
          </Pane>
       </children></VBox>
