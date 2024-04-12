@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ImageWindowController">
+    <ListView fx:id="imageListView" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+    <Button onAction="#uploadImage" text="Upload Image" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" />
+   <Button layoutX="697.0" layoutY="574.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Submit" textAlignment="CENTER" />
+</AnchorPane>

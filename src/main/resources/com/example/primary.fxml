@@ -9,11 +9,7 @@
     <!-- Container for uploading images -->
     <VBox fx:id="uploadContainer" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
         <!-- UI elements for image uploading -->
-        <Button onAction="#uploadImage" text="Upload Image" />
+        <Button text="Open Image Window" onAction="#openImageWindow"/>
     </VBox>
 
-    <!-- Container for displaying existing images -->
-    <FlowPane fx:id="imageDisplayContainer" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0">
-        <!-- Existing images will be displayed here -->
-    </FlowPane>
 </AnchorPane>
