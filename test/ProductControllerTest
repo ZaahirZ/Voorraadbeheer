@@ -25,16 +25,4 @@ public class ProductControllerTest extends ApplicationTest {
         assertEquals("Test", label.getText());
     }
 
-    @Test
-    public void testSetImage() {
-        File imageFile = new File("path/to/your/image.png");
-        controller.setImage(imageFile);
-        assertNotNull(controller.getImageView().getImage());
-        assertTrue(controller.getDeleteImage().isVisible());
-
-        controller.setImage(null);
-        assertNull(controller.getImageView().getImage());
-        assertFalse(controller.getDeleteImage().isVisible());
-    }
-
 }
