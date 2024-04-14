@@ -62,4 +62,12 @@ public class ProductController {
         imageView.setImage(null);
         deleteImage.setVisible(false);
     }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+    
+    public Button getDeleteImage() {
+        return deleteImage;
+    }
 }
