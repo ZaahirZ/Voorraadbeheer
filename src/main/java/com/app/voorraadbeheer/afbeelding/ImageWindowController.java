@@ -31,18 +31,16 @@ public class ImageWindowController {
     @FXML
     private ListView<File> imageListView;
 
-    
     private File selectedImage;
 
     public void initialize() {
         selectImageLoad();
         setCustomCellFactory();
-
         // Set the selected image when the user clicks on an item in the list view
-        ClickListenerImage();
+        clickListenerImage();
     }
 
-    private void ClickListenerImage() {
+    private void clickListenerImage() {
         imageListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedImage = newValue;
         });
@@ -96,8 +94,6 @@ public class ImageWindowController {
         if (imageFile != null && imageFile.delete()) {
             imageListView.getItems().remove(imageFile);
             imageListView.refresh();
-        } else {
-            System.out.println("Failed to delete the file");
         }
     }
     
@@ -156,9 +152,9 @@ public class ImageWindowController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/app/voorraadbeheer/primary.fxml"));
             Parent root = loader.load();
-            PrimaryController primaryController = loader.getController();
+            ProductController ProductController = loader.getController();
             if (selectedImage != null) {
-                primaryController.setImage(selectedImage);
+                ProductController.setImage(selectedImage);
             }
             Scene scene = new Scene(root);
             Stage stage = (Stage) imageListView.getScene().getWindow(); 

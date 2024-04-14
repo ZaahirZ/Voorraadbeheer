@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
 
-public class PrimaryController {
+public class ProductController {
 
 
 
