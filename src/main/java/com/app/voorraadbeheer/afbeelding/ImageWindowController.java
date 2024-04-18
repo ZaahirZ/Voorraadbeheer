@@ -106,16 +106,14 @@ public class ImageWindowController {
             dialog.setContentText("Name:");
 
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(newName -> {
+            result.ifPresent(newExtension -> {
                 
-                newName += getFileExtension(imageFile);
+                newExtension += getFileExtension(imageFile);
     
-                File renamedFile = new File(imageFile.getParent() + File.separator + newName);
+                File renamedFile = new File(imageFile.getParent() + File.separator + newExtension);
 
                 boolean renamed = imageFile.renameTo(renamedFile);
-                if (!renamed) {
-                    System.out.println("Failed to rename the file");
-                } else {
+                if (renamed) {
                     imageListView.getItems().remove(imageFile);
                     imageListView.getItems().add(renamedFile);
                     imageListView.refresh();
