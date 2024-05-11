@@ -13,9 +13,15 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
 
-public class ProductController implements ImageController {
+public class ProductController extends Product {
 
+    public ProductController(String name, double price, int stock) {
+        super(name, price, stock);
+    }
 
+    public ProductController() {
+        super("", 0.0, 0);  
+    }
 
     public void initialize() {
         deleteImage.setVisible(false);
@@ -63,13 +69,11 @@ public class ProductController implements ImageController {
         deleteImage.setVisible(false);
     }
 
-
-    @Override
     public ImageView getImageView() {
         return imageView;
     }
 
-    @Override
+    
     public Button getDeleteImage() {
         return deleteImage;
     }

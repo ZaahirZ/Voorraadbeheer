@@ -26,18 +26,24 @@ import javafx.scene.control.ContextMenu;
 
 
 
-public class ImageWindowController {
+public class ImageWindowController implements UI{
 
     @FXML
     private ListView<File> imageListView;
 
     private File selectedImage;
 
+
+    @Override
     public void initialize() {
         selectImageLoad();
         setCustomCellFactory();
         // Set the selected image when the user clicks on an item in the list view
         clickListenerImage();
+    }
+
+    public ImageWindowController() {
+        //constructor
     }
 
     private void clickListenerImage() {
@@ -146,6 +152,7 @@ public class ImageWindowController {
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex);
     }
 
+    @Override
     public void submit() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/app/voorraadbeheer/primary.fxml"));
