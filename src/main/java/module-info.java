@@ -1,7 +1,11 @@
-module com.example {
+module org.voorraadbeheer {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens com.example to javafx.fxml;
-    exports com.example;
+    requires org.controlsfx.controls;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.bootstrapfx.core;
+
+    opens org.voorraadbeheer to javafx.fxml;
+    exports org.voorraadbeheer;
 }
