@@ -14,3 +14,9 @@ N
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 4
 mvnw,5\d\5d837c4ed85ecaaf932c506e80ff5d7b9f3d590d
+_
+/src/main/resources/org/voorraadbeheer/style.css,0\5\05f157862035a59ba6ca03722c7f34aff4e3f932
+_
+/src/main/resources/org/voorraadbeheer/Main.fxml,2\9\290cba2d787f52ff20729c3e9640b07c6a34ef28
+8
+mvnw.cmd,1\f\1f1763f358c257ea3515417352b82b0165647ad1

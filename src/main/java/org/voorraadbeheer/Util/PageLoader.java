@@ -7,11 +7,9 @@ import javafx.stage.Stage;
 import org.voorraadbeheer.Main;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class PageLoader {
 
-    public static final String STYLESHEET_PATH = "/org/vooraadbeheer/style.css";
     private static Pane rootLayout;
     private static Stage stage;
 
@@ -34,20 +32,11 @@ public class PageLoader {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlName));
             Pane rootLayout = fxmlLoader.load();
-
-            if (rootLayout == null) {
-                throw new IOException("FXML file '" + fxmlName + "' could not be loaded.");
-            }
-
             Scene scene = new Scene(rootLayout);
-            if (stage != null) {
-                stage.setScene(scene);
-                stage.setTitle(title);
-                stage.show();
-            } else {
-                System.err.println("Error: Stage is null. Cannot set scene.");
-            }
-        } catch (IOException e) {
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.show();
+            } catch (IOException e) {
             e.printStackTrace();
         }
     }
