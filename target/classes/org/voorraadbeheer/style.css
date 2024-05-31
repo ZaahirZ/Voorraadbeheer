@@ -1,0 +1,18 @@
+
+#productZoeker {
+    -fx-background-color: #05668D;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-text-fill: white;
+}
+
+.root {
+    -fx-background-color: #05668D;
+}
+
+.sidebarPane {
+    -fx-background-color: #114153;
+}
+
+#profilePicture {
+    -fx-background-color: transparent;
+}
