@@ -2,6 +2,7 @@ package org.voorraadbeheer.PageController;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.voorraadbeheer.Util.PageLoader;
 
 public class MainController {
 
@@ -10,6 +11,6 @@ public class MainController {
 
     @FXML
     public void addProduct() {
-
+        PageLoader.loadProductPopUpPage();
     }
 }

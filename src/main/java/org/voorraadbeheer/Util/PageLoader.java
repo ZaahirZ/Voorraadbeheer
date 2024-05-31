@@ -1,8 +1,10 @@
 package org.voorraadbeheer.Util;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.voorraadbeheer.Main;
 
@@ -41,12 +43,26 @@ public class PageLoader {
         }
     }
 
+    public static void loadpopupPage(String fxmlName, String title) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlName));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void loadMainPage() {
         loadPage("Main.fxml", "Voorraadbeheer - Startscherm");
     }
 
-    public static void loadProductPage(){
-        loadPage("ProductToevoegen.fxml", "Voorraadbeheer - Product Toevoegen");
+    public static void loadProductPopUpPage(){
+        loadpopupPage("ProductToevoegen.fxml", "Voorraadbeheer - Product Toevoegen");
     }
 }
