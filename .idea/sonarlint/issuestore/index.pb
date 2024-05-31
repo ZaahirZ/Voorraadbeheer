@@ -20,3 +20,5 @@ _
 /src/main/resources/org/voorraadbeheer/Main.fxml,2\9\290cba2d787f52ff20729c3e9640b07c6a34ef28
 8
 mvnw.cmd,1\f\1f1763f358c257ea3515417352b82b0165647ad1
+i
+9src/main/java/org/voorraadbeheer/Util/SQLiteDatabase.java,7\4\7445906107c9ae087e27ca55fc714f2eabfff484
