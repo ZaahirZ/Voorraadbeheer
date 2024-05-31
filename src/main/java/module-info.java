@@ -8,6 +8,8 @@ module org.voorraadbeheer {
     requires java.sql;
     requires org.slf4j;
 
+
     opens org.voorraadbeheer to javafx.fxml;
+    opens org.voorraadbeheer.PageController to javafx.fxml;
     exports org.voorraadbeheer;
 }

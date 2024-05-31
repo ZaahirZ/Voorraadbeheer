@@ -45,4 +45,8 @@ public class PageLoader {
     public static void loadMainPage() {
         loadPage("Main.fxml", "Voorraadbeheer - Startscherm");
     }
+
+    public static void loadProductPage(){
+        loadPage("ProductToevoegen.fxml", "Voorraadbeheer - Product Toevoegen");
+    }
 }

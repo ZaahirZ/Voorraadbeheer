@@ -1,14 +1,10 @@
 package org.voorraadbeheer.Util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class SQLiteDatabase {
     private static final String URL = "jdbc:sqlite:voorraadbeheer.db";
 
-    // Method to establish connection to the SQLite database
     public static Connection connect() {
         Connection conn = null;
         try {
@@ -19,7 +15,6 @@ public class SQLiteDatabase {
         return conn;
     }
 
-    // Method to create a new database table for products
     public static void createNewDatabase() {
         try (Connection conn = connect()) {
             if (conn != null) {
@@ -35,6 +30,20 @@ public class SQLiteDatabase {
             }
         } catch (SQLException e) {
             System.out.println("Error creating table 'products': " + e.getMessage());
+        }
+    }
+
+    public static void insertProduct(String name, int quantity, double price) {
+        String sql = "INSERT INTO products(name, quantity, price) VALUES(?,?,?)";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setInt(2, quantity);
+            pstmt.setDouble(3, price);
+            pstmt.executeUpdate();
+            System.out.println("Product inserted successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error inserting product: " + e.getMessage());
         }
     }
 }
