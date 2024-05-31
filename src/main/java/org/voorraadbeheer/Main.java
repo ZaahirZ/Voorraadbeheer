@@ -1,20 +1,17 @@
 package org.voorraadbeheer;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
+import org.voorraadbeheer.Util.PageLoader;
 
 public class Main extends Application {
+
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Main.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Voorraadbeheer");
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage stage){
+        Pane rootLayout = new Pane();
+        PageLoader.setRootLayout(rootLayout);
+        PageLoader.startApplication();
     }
 
     public static void main(String[] args) {
