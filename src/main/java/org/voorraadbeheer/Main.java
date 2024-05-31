@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.voorraadbeheer.Util.PageLoader;
+import org.voorraadbeheer.Util.SQLiteDatabase;
 
 public class Main extends Application {
 
@@ -12,6 +13,7 @@ public class Main extends Application {
         Pane rootLayout = new Pane();
         PageLoader.setRootLayout(rootLayout);
         PageLoader.startApplication();
+        SQLiteDatabase.createNewDatabase();
     }
 
     public static void main(String[] args) {
