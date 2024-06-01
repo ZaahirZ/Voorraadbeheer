@@ -1,5 +1,5 @@
 
-#productZoeker {
+.textProductField {
     -fx-background-color: #05668D;
     -fx-border-color: transparent transparent white transparent;
     -fx-text-fill: white;
