@@ -5,13 +5,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.TextFormatter;
+import org.voorraadbeheer.Classes.Product;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.function.UnaryOperator;
 
-public class ProductController {
+public class ProductController{
 
     @FXML
     private TextField naamField;
@@ -21,6 +22,8 @@ public class ProductController {
 
     @FXML
     private TextField prijsField;
+
+    private Product product;
 
     @FXML
     public void initialize() {
@@ -61,7 +64,6 @@ public class ProductController {
         prijsField.setTextFormatter(priceFormatter);
     }
 
-    //
     @FXML
     private void voegProductaanDatabase() {
         String name = naamField.getText();
@@ -69,8 +71,16 @@ public class ProductController {
         Double price = parsePrice(prijsField.getText());
 
         if (isInputValid(name, quantity, price)) {
-            SQLiteDatabase.insertProduct(name, quantity, price);
-            showAlert(Alert.AlertType.INFORMATION, "Product Toegevoegd", "Product is succesvol toegevoegd.");
+            if (product == null) {
+                SQLiteDatabase.insertProduct(name, quantity, price);
+                showAlert(Alert.AlertType.INFORMATION, "Product Toegevoegd", "Product is succesvol toegevoegd.");
+            } else {
+                product.setName(name);
+                product.setQuantity(quantity);
+                product.setPrice(price);
+                SQLiteDatabase.updateProduct(product);
+                showAlert(Alert.AlertType.INFORMATION, "Product Gewijzigd", "Product is succesvol gewijzigd.");
+            }
             closeWindow();
         }
     }
@@ -99,12 +109,7 @@ public class ProductController {
             showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Productnaam mag niet leeg zijn.");
             return false;
         }
-        if (quantity == null) {
-            showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Aantal moet een geldig geheel getal zijn.");
-            return false;
-        }
-        if (price == null) {
-            showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Prijs moet een geldig nummer zijn.");
+        if (quantity == null || price == null) {
             return false;
         }
         return true;
@@ -122,4 +127,22 @@ public class ProductController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    public void setProduct(Product product) {
+        this.product = product;
+        if (product != null) {
+            naamField.setText(product.getName());
+            aantalField.setText(String.valueOf(product.getQuantity()));
+            prijsField.setText(formatPriceForDisplay(product.getPrice()));
+        }
+    }
+
+
+    private String formatPriceForDisplay(Double price) {
+        DecimalFormat format = new DecimalFormat("#,##0.00");
+        String formattedPrice = format.format(price);
+        return formattedPrice.replace(".", ",");
+    }
+
+
 }

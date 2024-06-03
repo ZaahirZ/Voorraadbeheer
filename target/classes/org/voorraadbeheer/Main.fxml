@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +13,7 @@
     <children>
       <Pane layoutX="340.0" layoutY="113.0" prefHeight="40.0" prefWidth="501.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="100.0">
          <children>
-                <TextField styleClass="textProductField" alignment="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="380.0" promptText="Zoek je product">
+                <TextField alignment="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="380.0" promptText="Zoek je product" styleClass="textProductField">
                     <font>
                         <Font name="Arial" size="21.0" />
                     </font>
@@ -31,6 +32,34 @@
                </graphic>
             </Button>
          </children></Pane>
-      <Button layoutX="1159.0" layoutY="14.0" mnemonicParsing="false" text="Add product" fx:id="voegProduct" onAction="#addProduct" />
+      <Button fx:id="voegProduct" layoutX="1065.0" layoutY="14.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="31.0" prefWidth="61.0" styleClass="productButton">
+         <graphic>
+            <ImageView fitHeight="79.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/voegProduct.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip />
+         </tooltip></Button>
+      <Button fx:id="deleteProduct" layoutX="1138.0" layoutY="14.0" minWidth="53.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" styleClass="productButton" onAction="#deleteProduct">
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/deleteProduct.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="editProduct" layoutX="1205.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="61.0" styleClass="productButton" onAction="#editProduct">
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/editProduct.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
     </children>
 </AnchorPane>
