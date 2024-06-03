@@ -143,6 +143,4 @@ public class ProductController{
         String formattedPrice = format.format(price);
         return formattedPrice.replace(".", ",");
     }
-
-
 }

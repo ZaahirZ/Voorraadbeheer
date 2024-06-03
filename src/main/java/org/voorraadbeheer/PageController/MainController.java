@@ -1,15 +1,21 @@
 package org.voorraadbeheer.PageController;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.Tooltip;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import org.voorraadbeheer.Classes.Product;
 import org.voorraadbeheer.Util.PageLoader;
 import org.voorraadbeheer.Util.SQLiteDatabase;
-import org.voorraadbeheer.Classes.Product;
 
+import java.util.List;
 import java.util.Optional;
 
 public class MainController {
@@ -17,11 +23,35 @@ public class MainController {
     public Button editProduct;
     public Button deleteProduct;
     public Button voegProduct;
+    public TextField zoekProduct;
+    public TableView<Product> searchResultsTable;
+    @FXML
+    private AnchorPane root;
 
     @FXML
     public void initialize() {
         toolTip();
+        zoekProductListener();
     }
+
+    public void searchProduct(String searchText) {
+        List<Product> searchResults = SQLiteDatabase.searchProductByName(searchText);
+        ObservableList<Product> productList = FXCollections.observableArrayList(searchResults);
+        searchResultsTable.setItems(productList);
+
+        double rowHeight = 24;
+        double headerHeight = 26;
+        double requiredHeight = (productList.size() * rowHeight) + headerHeight;
+
+        double maxHeight = 400;
+        double minHeight = 110;
+        requiredHeight = Math.min(Math.max(requiredHeight, minHeight), maxHeight);
+
+        searchResultsTable.setPrefHeight(requiredHeight);
+
+        searchResultsTable.requestLayout();
+    }
+
 
     @FXML
     public void addProduct() {
@@ -96,5 +126,36 @@ public class MainController {
             }
             alert.showAndWait();
         }
+    }
+
+    public void zoekProductListener(){
+        searchResultsTable.setVisible(false);
+
+        zoekProduct.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    searchResultsTable.setVisible(false);
+                }
+            }
+        });
+
+        zoekProduct.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+
+                searchResultsTable.setVisible(true);
+                searchProduct(newValue);
+            } else {
+                searchResultsTable.setVisible(false);
+            }
+        });
+
+        root.setOnMouseClicked(event -> {
+            Node source = (Node) event.getTarget();
+
+            if (!source.equals(zoekProduct)) {
+                zoekProduct.getParent().requestFocus();
+            }
+        });
     }
 }

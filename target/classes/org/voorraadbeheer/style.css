@@ -26,3 +26,35 @@
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2;
 }
+
+
+.search-results-table {
+    -fx-background-color: white;
+}
+
+.search-results-table .column-header {
+    -fx-background-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+}
+
+.search-results-table .table-cell {
+    -fx-text-fill: black; /* Cell text color */
+    -fx-font-size: 14px; /* Cell font size */
+    -fx-alignment: CENTER; /* Cell text alignment */
+}
+
+/* Define styles for the TableView rows */
+.search-results-table .table-row-cell {
+    -fx-background-color: #ffffff; /* Row background color */
+}
+
+/* Define hover effect for TableView rows */
+.search-results-table .table-row-cell:hover {
+    -fx-background-color: #114153; /* Hover background color */
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
