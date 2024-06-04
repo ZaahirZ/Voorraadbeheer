@@ -1,14 +1,10 @@
 package org.voorraadbeheer.PageController;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import org.voorraadbeheer.Classes.Product;
@@ -112,31 +108,33 @@ public class MainController {
             String productName = result.get();
             boolean isDeleted = SQLiteDatabase.deleteProductByName(productName);
 
-            Alert alert;
-            if (isDeleted) {
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Succes");
-                alert.setHeaderText(null);
-                alert.setContentText("Product succesvol verwijderd.");
-            } else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Fout");
-                alert.setHeaderText(null);
-                alert.setContentText("Verwijderen van product mislukt.");
-            }
+            Alert alert = getAlert(isDeleted);
             alert.showAndWait();
         }
+    }
+
+    private static Alert getAlert(boolean isDeleted) {
+        Alert alert;
+        if (isDeleted) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succes");
+            alert.setHeaderText(null);
+            alert.setContentText("Product succesvol verwijderd.");
+        } else {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fout");
+            alert.setHeaderText(null);
+            alert.setContentText("Verwijderen van product mislukt.");
+        }
+        return alert;
     }
 
     public void zoekProductListener(){
         searchResultsTable.setVisible(false);
 
-        zoekProduct.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue) {
-                    searchResultsTable.setVisible(false);
-                }
+        zoekProduct.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                searchResultsTable.setVisible(false);
             }
         });
 

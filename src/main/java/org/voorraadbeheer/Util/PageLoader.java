@@ -1,5 +1,6 @@
 package org.voorraadbeheer.Util;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,12 +14,12 @@ import org.voorraadbeheer.PageController.ProductController;
 import java.io.IOException;
 
 public class PageLoader {
-
+    @FXML
     private static Pane rootLayout;
     private static Stage stage;
 
     public static void setRootLayout(Pane rootLayout) {
-        PageLoader.rootLayout = rootLayout;
+       PageLoader.rootLayout = rootLayout ;
     }
 
     public static void setStage(Stage stage) {
@@ -45,7 +46,7 @@ public class PageLoader {
         }
     }
 
-    public static void loadpopupPage(String fxmlName, String title) {
+    public static FXMLLoader loadpopupPage(String fxmlName, String title) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlName));
             Parent root = fxmlLoader.load();
@@ -54,31 +55,25 @@ public class PageLoader {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
+            return fxmlLoader;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static void loadMainPage() {
         loadPage("Main.fxml", "Voorraadbeheer - Startscherm");
     }
 
-    public static void loadProductPopUpPage() {
-        loadpopupPage("ProductToevoegen.fxml", "Voorraadbeheer - Product Toevoegen");
-    }
-
     public static void loadProductPage(Product product) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ProductToevoegen.fxml"));
-            Parent root = fxmlLoader.load();
-            ProductController controller = fxmlLoader.getController();
-            controller.setProduct(product);
-            Stage stage = new Stage();
-            stage.setTitle(product == null ? "Voorraadbeheer - Product Toevoegen" : "Voorraadbeheer - Product Wijzigen");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (IOException e) {
+            FXMLLoader fxmlLoader = loadpopupPage("ProductToevoegen.fxml", product == null ? "Voorraadbeheer - Product Toevoegen" : "Voorraadbeheer - Product Wijzigen");
+            if (fxmlLoader != null) {
+                ProductController controller = fxmlLoader.getController();
+                controller.setProduct(product);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
