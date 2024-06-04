@@ -45,26 +45,8 @@ public class PageLoader {
         }
     }
 
-    public static void loadpopupPage(String fxmlName, String title) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlName));
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void loadMainPage() {
         loadPage("Main.fxml", "Voorraadbeheer - Startscherm");
-    }
-
-    public static void loadProductPopUpPage() {
-        loadpopupPage("ProductToevoegen.fxml", "Voorraadbeheer - Product Toevoegen");
     }
 
     public static void loadProductPage(Product product) {
