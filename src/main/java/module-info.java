@@ -11,5 +11,6 @@ module org.voorraadbeheer {
 
     opens org.voorraadbeheer to javafx.fxml;
     opens org.voorraadbeheer.PageController to javafx.fxml;
+    opens org.voorraadbeheer.Classes to javafx.base;
     exports org.voorraadbeheer;
 }

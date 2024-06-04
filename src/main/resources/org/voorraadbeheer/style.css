@@ -1,5 +1,5 @@
 
-#productZoeker {
+.textProductField {
     -fx-background-color: #05668D;
     -fx-border-color: transparent transparent white transparent;
     -fx-text-fill: white;
@@ -14,5 +14,44 @@
 }
 
 #profilePicture {
+    -fx-background-color: transparent;
+}
+
+.productButton {
+    -fx-background-color: transparent;
+}
+
+.productButton:hover {
+    -fx-cursor: hand;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+.search-results-table {
+    -fx-background-color: white;
+}
+
+.search-results-table .column-header {
+    -fx-background-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+}
+
+.search-results-table .table-cell {
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+}
+
+.search-results-table .table-row-cell {
+    -fx-background-color: #ffffff;
+}
+
+.search-results-table .table-row-cell:hover {
+    -fx-background-color: #114153;
+}
+
+.table-view .scroll-bar:horizontal {
     -fx-background-color: transparent;
 }
