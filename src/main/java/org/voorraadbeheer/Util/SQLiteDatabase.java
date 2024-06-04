@@ -27,7 +27,8 @@ public class SQLiteDatabase {
                         + " id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
                         + " name TEXT NOT NULL,\n"
                         + " quantity INTEGER NOT NULL,\n"
-                        + " price REAL\n"
+                        + " price REAL,\n"
+                        + " imagePath TEXT\n" // New column for the image path
                         + ");";
                 stmt.execute(sql);
                 System.out.println("Table 'products' has been created or already exists.");
@@ -37,13 +38,14 @@ public class SQLiteDatabase {
         }
     }
 
-    public static void insertProduct(String name, int quantity, double price) {
-        String sql = "INSERT INTO products(name, quantity, price) VALUES(?,?,?)";
+    public static void insertProduct(String name, int quantity, double price, String imagePath) {
+        String sql = "INSERT INTO products(name, quantity, price, imagePath) VALUES(?, ?, ?, ?)";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setInt(2, quantity);
             pstmt.setDouble(3, price);
+            pstmt.setString(4, imagePath);
             pstmt.executeUpdate();
             System.out.println("Product inserted successfully.");
         } catch (SQLException e) {
@@ -52,13 +54,14 @@ public class SQLiteDatabase {
     }
 
     public static void updateProduct(Product product) {
-        String sql = "UPDATE products SET name = ?, quantity = ?, price = ? WHERE id = ?";
+        String sql = "UPDATE products SET name = ?, quantity = ?, price = ?, imagePath = ? WHERE id = ?";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, product.getName());
             pstmt.setInt(2, product.getQuantity());
             pstmt.setDouble(3, product.getPrice());
-            pstmt.setInt(4, product.getId());
+            pstmt.setString(4, product.getImagePath());
+            pstmt.setInt(5, product.getId());
             pstmt.executeUpdate();
             System.out.println("Product updated successfully.");
         } catch (SQLException e) {
@@ -78,8 +81,9 @@ public class SQLiteDatabase {
                 String name = rs.getString("name");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
-                productList.add(new Product(id, name, quantity, price));
-                System.out.println("ID: " + id + ", Name: " + name + ", Quantity: " + quantity + ", Price: " + price);
+                String imagePath = rs.getString("imagePath");
+                productList.add(new Product(id, name, quantity, price, imagePath));
+                System.out.println("ID: " + id + ", Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Image Path: " + imagePath);
             }
         } catch (SQLException e) {
             System.out.println("Error fetching products: " + e.getMessage());
@@ -98,7 +102,8 @@ public class SQLiteDatabase {
                 int id = rs.getInt("id");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
-                return new Product(id, name, quantity, price);
+                String imagePath = rs.getString("imagePath");
+                return new Product(id, name, quantity, price, imagePath);
             }
         } catch (SQLException e) {
             System.out.println("Error fetching product: " + e.getMessage());
@@ -137,9 +142,9 @@ public class SQLiteDatabase {
                 String productName = rs.getString("name");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
-
-                // Create a Product object and add it to the list
-                Product product = new Product(id, productName, quantity, price);
+                String imagePath = rs.getString("imagePath");
+                
+                Product product = new Product(id, productName, quantity, price, imagePath);
                 products.add(product);
             }
         } catch (SQLException e) {

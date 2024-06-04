@@ -3,16 +3,24 @@ package org.voorraadbeheer.PageController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.voorraadbeheer.Classes.Product;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.function.UnaryOperator;
 
-public class ProductController{
+public class ProductController {
 
     @FXML
     private TextField naamField;
@@ -23,7 +31,13 @@ public class ProductController{
     @FXML
     private TextField prijsField;
 
+    @FXML
+    private ImageView productImageView;
+
+    private File selectedImageFile;
     private Product product;
+
+    private static final String IMAGE_DIR = "product_images";
 
     @FXML
     public void initialize() {
@@ -71,17 +85,39 @@ public class ProductController{
         Double price = parsePrice(prijsField.getText());
 
         if (isInputValid(name, quantity, price)) {
+            String imagePath = (selectedImageFile != null) ? copyImageToDirectory(selectedImageFile) :
+                    (product != null ? product.getImagePath() : null);
+
             if (product == null) {
-                SQLiteDatabase.insertProduct(name, quantity, price);
+                SQLiteDatabase.insertProduct(name, quantity, price, imagePath);
                 showAlert(Alert.AlertType.INFORMATION, "Product Toegevoegd", "Product is succesvol toegevoegd.");
             } else {
                 product.setName(name);
                 product.setQuantity(quantity);
                 product.setPrice(price);
+                product.setImagePath(imagePath);
                 SQLiteDatabase.updateProduct(product);
                 showAlert(Alert.AlertType.INFORMATION, "Product Gewijzigd", "Product is succesvol gewijzigd.");
             }
             closeWindow();
+        }
+    }
+
+    private String copyImageToDirectory(File imageFile) {
+        try {
+            Path targetDirectory = Paths.get(IMAGE_DIR);
+            if (!Files.exists(targetDirectory)) {
+                Files.createDirectories(targetDirectory);
+            }
+
+            String newFileName = System.currentTimeMillis() + "_" + imageFile.getName();
+            Path targetPath = targetDirectory.resolve(newFileName);
+            Files.copy(imageFile.toPath(), targetPath);
+
+            return targetPath.toString();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Fout bij kopiëren", "Kon afbeelding niet kopiëren: " + e.getMessage());
+            return null;
         }
     }
 
@@ -134,13 +170,33 @@ public class ProductController{
             naamField.setText(product.getName());
             aantalField.setText(String.valueOf(product.getQuantity()));
             prijsField.setText(formatPriceForDisplay(product.getPrice()));
+            loadImage(product.getImagePath());
         }
     }
 
+    private void loadImage(String imagePath) {
+        if (imagePath != null && !imagePath.isEmpty()) {
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                productImageView.setImage(new Image("file:" + imageFile.getAbsolutePath()));
+            }
+        }
+    }
 
     private String formatPriceForDisplay(Double price) {
         DecimalFormat format = new DecimalFormat("#,##0.00");
         String formattedPrice = format.format(price);
         return formattedPrice.replace(".", ",");
+    }
+
+    @FXML
+    private void uploadImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        selectedImageFile = fileChooser.showOpenDialog(productImageView.getScene().getWindow());
+
+        if (selectedImageFile != null) {
+            productImageView.setImage(new Image("file:" + selectedImageFile.getAbsolutePath()));
+        }
     }
 }

@@ -27,7 +27,6 @@
     -fx-scale-y: 1.2;
 }
 
-
 .search-results-table {
     -fx-background-color: white;
 }
@@ -40,19 +39,17 @@
 }
 
 .search-results-table .table-cell {
-    -fx-text-fill: black; /* Cell text color */
-    -fx-font-size: 14px; /* Cell font size */
-    -fx-alignment: CENTER; /* Cell text alignment */
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
 }
 
-/* Define styles for the TableView rows */
 .search-results-table .table-row-cell {
-    -fx-background-color: #ffffff; /* Row background color */
+    -fx-background-color: #ffffff;
 }
 
-/* Define hover effect for TableView rows */
 .search-results-table .table-row-cell:hover {
-    -fx-background-color: #114153; /* Hover background color */
+    -fx-background-color: #114153;
 }
 
 .table-view .scroll-bar:horizontal {
