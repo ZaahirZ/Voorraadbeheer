@@ -56,7 +56,7 @@ public class MainController {
 
     @FXML
     public void addProduct() {
-        PageLoader.loadProductPage(null); // Pass null to indicate adding a new product
+        PageLoader.loadProductController(null); // Pass null to indicate adding a new product
     }
 
     private Tooltip createInstantTooltip(String text) {
@@ -90,7 +90,7 @@ public class MainController {
             String productName = result.get();
             Product product = SQLiteDatabase.getProductByName(productName);
             if (product != null) {
-                PageLoader.loadProductPage(product);
+                PageLoader.loadProductController(product);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Fout");
@@ -158,5 +158,9 @@ public class MainController {
                 zoekProduct.getParent().requestFocus();
             }
         });
+    }
+
+    public void productPage() {
+        PageLoader.loadProductPage();
     }
 }

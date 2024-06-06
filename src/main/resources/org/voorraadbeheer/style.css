@@ -55,3 +55,15 @@
 .table-view .scroll-bar:horizontal {
     -fx-background-color: transparent;
 }
+
+.tabbuttons {
+    -fx-background-color: transparent;
+    -fx-border-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.tabbuttons:hover {
+     -fx-cursor: hand;
+     -fx-background-color: #05668D;
+ }
