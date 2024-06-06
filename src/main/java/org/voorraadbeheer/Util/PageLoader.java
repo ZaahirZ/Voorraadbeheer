@@ -49,7 +49,7 @@ public class PageLoader {
         loadPage("Main.fxml", "Voorraadbeheer - Startscherm");
     }
 
-    public static void loadProductPage(Product product) {
+    public static void loadProductController(Product product) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ProductToevoegen.fxml"));
             Parent root = fxmlLoader.load();
@@ -63,5 +63,9 @@ public class PageLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void loadProductPage(){
+        loadPage("ProductPage.fxml", "Voorraadbeheer - Product");
     }
 }
