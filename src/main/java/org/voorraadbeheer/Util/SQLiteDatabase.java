@@ -6,39 +6,39 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLiteDatabase {
+public class SQLiteDatabase implements Database {
     private static final String URL = "jdbc:sqlite:voorraadbeheer.db";
 
-    public static Connection connect() {
-        Connection conn = null;
+    @Override
+    public Connection connect() {
         try {
-            conn = DriverManager.getConnection(URL);
+            return DriverManager.getConnection(URL);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException("Error connecting to the database", e);
         }
-        return conn;
     }
 
-    public static void createNewDatabase() {
+    @Override
+    public void createTable() {
         try (Connection conn = connect()) {
-            if (conn != null) {
-                Statement stmt = conn.createStatement();
-                String sql = "CREATE TABLE IF NOT EXISTS products (\n"
-                        + " id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-                        + " name TEXT NOT NULL,\n"
-                        + " quantity INTEGER NOT NULL,\n"
-                        + " price REAL,\n"
-                        + " imagePath TEXT\n" // New column for the image path
-                        + ");";
+            String sql = "CREATE TABLE IF NOT EXISTS products (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "name TEXT NOT NULL," +
+                    "quantity INTEGER NOT NULL," +
+                    "price REAL," +
+                    "imagePath TEXT" +
+                    ")";
+            try (Statement stmt = conn.createStatement()) {
                 stmt.execute(sql);
                 System.out.println("Table 'products' has been created or already exists.");
             }
         } catch (SQLException e) {
-            System.out.println("Error creating table 'products': " + e.getMessage());
+            handleSQLException(e, "Error creating table 'products'");
         }
     }
 
-    public static void insertProduct(String name, int quantity, double price, String imagePath) {
+    @Override
+    public void insertProduct(String name, int quantity, double price, String imagePath) {
         String sql = "INSERT INTO products(name, quantity, price, imagePath) VALUES(?, ?, ?, ?)";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -49,11 +49,12 @@ public class SQLiteDatabase {
             pstmt.executeUpdate();
             System.out.println("Product inserted successfully.");
         } catch (SQLException e) {
-            System.out.println("Error inserting product: " + e.getMessage());
+            handleSQLException(e, "Error inserting product");
         }
     }
 
-    public static void updateProduct(Product product) {
+    @Override
+    public void updateProduct(Product product) {
         String sql = "UPDATE products SET name = ?, quantity = ?, price = ?, imagePath = ? WHERE id = ?";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -65,11 +66,12 @@ public class SQLiteDatabase {
             pstmt.executeUpdate();
             System.out.println("Product updated successfully.");
         } catch (SQLException e) {
-            System.out.println("Error updating product: " + e.getMessage());
+            handleSQLException(e, "Error updating product");
         }
     }
 
-    public static List<Product> getAllProducts() {
+    @Override
+    public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
         String sql = "SELECT * FROM products";
         try (Connection conn = connect();
@@ -86,12 +88,13 @@ public class SQLiteDatabase {
                 System.out.println("ID: " + id + ", Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Image Path: " + imagePath);
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching products: " + e.getMessage());
+            handleSQLException(e, "Error fetching products");
         }
         return productList;
     }
 
-    public static Product getProductByName(String name) {
+    @Override
+    public Product getProductByName(String name) {
         String sql = "SELECT * FROM products WHERE name = ?";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -106,51 +109,49 @@ public class SQLiteDatabase {
                 return new Product(id, name, quantity, price, imagePath);
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching product: " + e.getMessage());
+            handleSQLException(e, "Error fetching product");
         }
         return null;
     }
 
-    public static boolean deleteProductByName(String productName) {
+    @Override
+    public boolean deleteProductByName(String productName) {
         String sql = "DELETE FROM products WHERE name = ?";
-
-        try (Connection conn = DriverManager.getConnection(URL);
+        try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, productName);
             int affectedRows = pstmt.executeUpdate();
-
             return affectedRows > 0;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            handleSQLException(e, "Error deleting product");
             return false;
         }
     }
 
-    public static List<Product> searchProductByName(String name) {
+    @Override
+    public List<Product> searchProductByName(String name) {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM products WHERE name LIKE ?";
-
-        try (Connection conn = DriverManager.getConnection(URL);
+        try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, "%" + name + "%");
             ResultSet rs = pstmt.executeQuery();
-
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String productName = rs.getString("name");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
                 String imagePath = rs.getString("imagePath");
-                
                 Product product = new Product(id, productName, quantity, price, imagePath);
                 products.add(product);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e, "Error searching products by name");
         }
-
         return products;
+    }
+
+    private void handleSQLException(SQLException e, String message) {
+        System.err.println(message + ": " + e.getMessage());
     }
 }

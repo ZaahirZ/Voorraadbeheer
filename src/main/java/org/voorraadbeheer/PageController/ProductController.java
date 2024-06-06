@@ -37,6 +37,8 @@ public class ProductController {
     private File selectedImageFile;
     private Product product;
 
+    SQLiteDatabase SQLiteDatabase = new SQLiteDatabase();
+
     private static final String IMAGE_DIR = "product_images";
 
     @FXML

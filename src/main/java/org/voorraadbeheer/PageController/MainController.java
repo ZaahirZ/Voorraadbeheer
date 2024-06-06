@@ -7,8 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import org.voorraadbeheer.Classes.Product;
@@ -27,6 +25,9 @@ public class MainController {
     public TableView<Product> searchResultsTable;
     @FXML
     private AnchorPane root;
+
+    SQLiteDatabase SQLiteDatabase = new SQLiteDatabase();
+
 
     @FXML
     public void initialize() {

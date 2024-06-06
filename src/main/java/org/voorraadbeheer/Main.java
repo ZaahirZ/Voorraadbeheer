@@ -7,13 +7,14 @@ import org.voorraadbeheer.Util.PageLoader;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 public class Main extends Application {
+    SQLiteDatabase SQL = new SQLiteDatabase();
 
     @Override
     public void start(Stage stage){
         Pane rootLayout = new Pane();
         PageLoader.setRootLayout(rootLayout);
         PageLoader.startApplication();
-        SQLiteDatabase.createNewDatabase();
+        SQL.createTable();
     }
 
     public static void main(String[] args) {
