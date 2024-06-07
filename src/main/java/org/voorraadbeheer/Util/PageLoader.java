@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import org.voorraadbeheer.Classes.Product;
 import org.voorraadbeheer.Main;
 import org.voorraadbeheer.PageController.ProductController;
+import org.voorraadbeheer.PageController.ProductPageController;
 
 import java.io.IOException;
 
@@ -38,6 +39,7 @@ public class PageLoader {
             Pane rootLayout = fxmlLoader.load();
             Scene scene = new Scene(rootLayout);
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.setTitle(title);
             stage.show();
         } catch (IOException e) {
@@ -56,6 +58,7 @@ public class PageLoader {
             ProductController controller = fxmlLoader.getController();
             controller.setProduct(product);
             Stage stage = new Stage();
+            stage.setResizable(false);
             stage.setTitle(product == null ? "Voorraadbeheer - Product Toevoegen" : "Voorraadbeheer - Product Wijzigen");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
@@ -65,7 +68,24 @@ public class PageLoader {
         }
     }
 
-    public static void loadProductPage(){
-        loadPage("ProductPage.fxml", "Voorraadbeheer - Product");
+    public static void loadProductPage(Product product) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ProductPage.fxml"));
+            Parent root = fxmlLoader.load();
+            ProductPageController controller = fxmlLoader.getController();
+            controller.setProduct(product);
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setTitle("Voorraadbeheer - Product");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadAllProductPage() {
+        loadPage("AllProductPage.fxml", "Voorraadbeheer - Alle Producten");
+
     }
 }

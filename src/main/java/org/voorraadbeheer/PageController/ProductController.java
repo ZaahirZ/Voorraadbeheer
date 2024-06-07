@@ -147,10 +147,7 @@ public class ProductController {
             showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Productnaam mag niet leeg zijn.");
             return false;
         }
-        if (quantity == null || price == null) {
-            return false;
-        }
-        return true;
+        return quantity != null && price != null;
     }
 
     private void closeWindow() {
@@ -177,12 +174,18 @@ public class ProductController {
     }
 
     private void loadImage(String imagePath) {
+        Image image;
         if (imagePath != null && !imagePath.isEmpty()) {
             File imageFile = new File(imagePath);
             if (imageFile.exists()) {
-                productImageView.setImage(new Image("file:" + imageFile.getAbsolutePath()));
+                image = new Image("file:" + imageFile.getAbsolutePath());
+            } else {
+                image = new Image("file:" + IMAGE_DIR + "/defaultImage.png");
             }
+        } else {
+            image = new Image("file:" + IMAGE_DIR + "/defaultImage.png");
         }
+        productImageView.setImage(image);
     }
 
     private String formatPriceForDisplay(Double price) {

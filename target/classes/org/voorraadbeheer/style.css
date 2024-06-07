@@ -67,3 +67,58 @@
      -fx-cursor: hand;
      -fx-background-color: #05668D;
  }
+
+.productInformatie {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* Different color styles */
+.label-green {
+    -fx-text-fill: green;
+    -fx-font-size: 18pt;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.label-red {
+    -fx-text-fill: red;
+    -fx-font-size: 18pt;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.label-blue {
+    -fx-text-fill: blue;
+    -fx-font-size: 18pt;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+
+.product-image {
+    -fx-padding: 5px; /* Minimal padding */
+}
+
+.grid-pane {
+    -fx-padding: 18px; /* Overall padding for the grid */
+    -fx-hgap: 18px; /* Horizontal gap between products */
+    -fx-vgap: 18px; /* Vertical gap between products */
+}
+
+#AllProductPageButton {
+    -fx-background-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-color: transparent;
+}
+
+#AllProductPageButton:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+

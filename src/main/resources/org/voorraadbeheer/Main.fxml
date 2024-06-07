@@ -34,7 +34,8 @@
                         </ImageView>
                     </graphic>
                 </Button>
-            <Button layoutX="15.0" layoutY="195.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" text="All Products" styleClass="tabbuttons" onAction="#productPage" />
+            <Button layoutX="15.0" layoutY="195.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" text="All Products" styleClass="tabbuttons" onAction="#AllProducts" />
+                <Button layoutX="14.0" layoutY="253.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" text="Search Product" styleClass="tabbuttons" id="AllProductPageButton"/>
             </children>
         </Pane>
         <Button fx:id="voegProduct" layoutX="1065.0" layoutY="14.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="31.0" prefWidth="61.0" styleClass="productButton">
