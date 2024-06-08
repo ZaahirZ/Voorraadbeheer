@@ -82,9 +82,9 @@ public class ProductController {
 
     @FXML
     private void voegProductaanDatabase() {
-        String name = naamField.getText();
-        Integer quantity = parseQuantity(aantalField.getText());
-        Double price = parsePrice(prijsField.getText());
+        String name = naamField.getText().trim();
+        Integer quantity = parseQuantity(aantalField.getText().trim());
+        Double price = parsePrice(prijsField.getText().trim());
 
         if (isInputValid(name, quantity, price)) {
             String imagePath = (selectedImageFile != null) ? copyImageToDirectory(selectedImageFile) :
@@ -125,7 +125,7 @@ public class ProductController {
 
     private Integer parseQuantity(String text) {
         try {
-            return Integer.parseInt(text);
+            return Integer.parseInt(text.trim());
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Aantal moet een geldig geheel getal zijn.");
             return null;
@@ -134,7 +134,7 @@ public class ProductController {
 
     private Double parsePrice(String text) {
         try {
-            String priceText = text.replace(",", ".");
+            String priceText = text.trim().replace(",", ".");
             return Double.parseDouble(priceText);
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Prijs moet een geldig nummer zijn.");

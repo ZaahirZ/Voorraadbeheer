@@ -15,7 +15,7 @@ import java.util.List;
 
 public class AllPageController {
 
-    private static final String IMAGE_DIR = "product_images";
+    private static final String DEFAULT_IMAGE_PATH = "product_images/defaultImage.png";
 
     @FXML
     private GridPane gridPane;
@@ -52,7 +52,7 @@ public class AllPageController {
     }
 
     private ImageView createProductImageView(String imagePath) {
-        Image image = loadImage(imagePath != null ? imagePath : "defaultImage.png");
+        Image image = loadImage(imagePath);
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
@@ -76,12 +76,19 @@ public class AllPageController {
     }
 
     private Image loadImage(String imagePath) {
-        String imageURL = "file:" + IMAGE_DIR + "/" + imagePath;
-        File imageFile = new File(imageURL);
-        if (!imageFile.exists()) {
-            imageURL = "file:" + IMAGE_DIR + "/defaultImage.png";
+        if (imagePath == null || imagePath.isEmpty()) {
+            imagePath = DEFAULT_IMAGE_PATH;
         }
-        return new Image(imageURL);
+        File imageFile = new File(imagePath);
+
+        if (!imageFile.exists()) {
+            imageFile = new File(DEFAULT_IMAGE_PATH);
+        }
+
+        if (imageFile.exists()) {
+            return new Image("file:" + imageFile.getAbsolutePath());
+        }
+        return null;
     }
 
     @FXML
