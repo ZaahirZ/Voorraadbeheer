@@ -112,20 +112,25 @@ public class MainController {
             String productName = result.get();
             boolean isDeleted = SQLiteDatabase.deleteProductByName(productName);
 
-            Alert alert;
-            if (isDeleted) {
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Succes");
-                alert.setHeaderText(null);
-                alert.setContentText("Product succesvol verwijderd.");
-            } else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Fout");
-                alert.setHeaderText(null);
-                alert.setContentText("Verwijderen van product mislukt.");
-            }
+            Alert alert = getAlert(isDeleted);
             alert.showAndWait();
         }
+    }
+
+    private Alert getAlert(boolean isDeleted) {
+        Alert alert;
+        if (isDeleted) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succes");
+            alert.setHeaderText(null);
+            alert.setContentText("Product succesvol verwijderd.");
+        } else {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fout");
+            alert.setHeaderText(null);
+            alert.setContentText("Verwijderen van product mislukt.");
+        }
+        return alert;
     }
 
     public void zoekProductListener(){

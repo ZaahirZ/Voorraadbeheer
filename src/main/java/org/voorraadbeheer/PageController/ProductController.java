@@ -37,39 +37,29 @@ public class ProductController {
     private File selectedImageFile;
     private Product product;
 
-    SQLiteDatabase SQLiteDatabase = new SQLiteDatabase();
-
+    private final SQLiteDatabase SQLiteDatabase = new SQLiteDatabase();
     private static final String IMAGE_DIR = "product_images";
 
     @FXML
     public void initialize() {
-        configureAantalField();
+        configureTextField(aantalField);
         configurePrijsField();
     }
 
-    private void configureAantalField() {
-        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
-            String newText = change.getControlNewText();
-            return (newText.matches("\\d*")) ? change : null;
-        };
-        aantalField.setTextFormatter(new TextFormatter<>(integerFilter));
+    private void configureTextField(TextField textField) {
+        UnaryOperator<TextFormatter.Change> filter = change -> change.getControlNewText().matches("\\d*") ? change : null;
+        textField.setTextFormatter(new TextFormatter<>(filter));
     }
 
     private void configurePrijsField() {
         DecimalFormat format = new DecimalFormat("#,##0.00");
-        UnaryOperator<TextFormatter.Change> doubleFilter = change -> {
-            String newText = change.getControlNewText();
-            return (newText.matches("\\d*(,\\d{0,2})?")) ? change : null;
-        };
-        TextFormatter<Double> priceFormatter = new TextFormatter<>(change -> {
-            if (doubleFilter.apply(change) == null) {
-                return null;
-            }
+        UnaryOperator<TextFormatter.Change> doubleFilter = change -> change.getControlNewText().matches("\\d*(,\\d{0,2})?") ? change : null;
 
+        TextFormatter<Double> priceFormatter = new TextFormatter<>(change -> {
+            if (doubleFilter.apply(change) == null) return null;
             try {
-                String text = change.getControlNewText();
-                if (!text.isEmpty()) {
-                    format.parse(text.replace(",", "."));
+                if (!change.getControlNewText().isEmpty()) {
+                    format.parse(change.getControlNewText().replace(",", "."));
                 }
                 return change;
             } catch (ParseException e) {
@@ -87,30 +77,31 @@ public class ProductController {
         Double price = parsePrice(prijsField.getText().trim());
 
         if (isInputValid(name, quantity, price)) {
-            String imagePath = (selectedImageFile != null) ? copyImageToDirectory(selectedImageFile) :
-                    (product != null ? product.getImagePath() : null);
+            String imagePath = selectedImageFile != null ? copyImageToDirectory(selectedImageFile) : (product != null ? product.getImagePath() : null);
 
             if (product == null) {
                 SQLiteDatabase.insertProduct(name, quantity, price, imagePath);
                 showAlert(Alert.AlertType.INFORMATION, "Product Toegevoegd", "Product is succesvol toegevoegd.");
             } else {
-                product.setName(name);
-                product.setQuantity(quantity);
-                product.setPrice(price);
-                product.setImagePath(imagePath);
-                SQLiteDatabase.updateProduct(product);
+                updateProduct(name, quantity, price, imagePath);
                 showAlert(Alert.AlertType.INFORMATION, "Product Gewijzigd", "Product is succesvol gewijzigd.");
             }
             closeWindow();
         }
     }
 
+    private void updateProduct(String name, Integer quantity, Double price, String imagePath) {
+        product.setName(name);
+        product.setQuantity(quantity);
+        product.setPrice(price);
+        product.setImagePath(imagePath);
+        SQLiteDatabase.updateProduct(product);
+    }
+
     private String copyImageToDirectory(File imageFile) {
         try {
             Path targetDirectory = Paths.get(IMAGE_DIR);
-            if (!Files.exists(targetDirectory)) {
-                Files.createDirectories(targetDirectory);
-            }
+            if (!Files.exists(targetDirectory)) Files.createDirectories(targetDirectory);
 
             String newFileName = System.currentTimeMillis() + "_" + imageFile.getName();
             Path targetPath = targetDirectory.resolve(newFileName);
@@ -125,7 +116,7 @@ public class ProductController {
 
     private Integer parseQuantity(String text) {
         try {
-            return Integer.parseInt(text.trim());
+            return Integer.parseInt(text);
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Aantal moet een geldig geheel getal zijn.");
             return null;
@@ -134,8 +125,7 @@ public class ProductController {
 
     private Double parsePrice(String text) {
         try {
-            String priceText = text.trim().replace(",", ".");
-            return Double.parseDouble(priceText);
+            return Double.parseDouble(text.replace(",", "."));
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Prijs moet een geldig nummer zijn.");
             return null;
@@ -174,24 +164,13 @@ public class ProductController {
     }
 
     private void loadImage(String imagePath) {
-        Image image;
-        if (imagePath != null && !imagePath.isEmpty()) {
-            File imageFile = new File(imagePath);
-            if (imageFile.exists()) {
-                image = new Image("file:" + imageFile.getAbsolutePath());
-            } else {
-                image = new Image("file:" + IMAGE_DIR + "/defaultImage.png");
-            }
-        } else {
-            image = new Image("file:" + IMAGE_DIR + "/defaultImage.png");
-        }
-        productImageView.setImage(image);
+        String imagePathToUse = (imagePath != null && !imagePath.isEmpty() && new File(imagePath).exists()) ? imagePath : IMAGE_DIR + "/defaultImage.png";
+        productImageView.setImage(new Image("file:" + imagePathToUse));
     }
 
     private String formatPriceForDisplay(Double price) {
         DecimalFormat format = new DecimalFormat("#,##0.00");
-        String formattedPrice = format.format(price);
-        return formattedPrice.replace(".", ",");
+        return format.format(price).replace(".", ",");
     }
 
     @FXML
