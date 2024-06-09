@@ -69,7 +69,7 @@ public class AllPageController {
         if (quantity > 10) {
             return "label-green";
         } else if (quantity > 5) {
-            return "label-blue";
+            return "label-orange";
         } else {
             return "label-red";
         }

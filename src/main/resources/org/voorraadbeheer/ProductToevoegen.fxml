@@ -45,7 +45,7 @@
          </font>
       </Text>
    </Pane>
-   <Button layoutX="14.0" layoutY="561.0" mnemonicParsing="false" onAction="#voegProductaanDatabase" text="Voeg Toe" />
-   <Button layoutX="161.0" layoutY="325.0" mnemonicParsing="false" onAction="#uploadImage" text="Upload Image" />
+   <Button layoutX="14.0" layoutY="561.0" mnemonicParsing="false" onAction="#voegProductaanDatabase" text="Voeg Toe" styleClass="normalButton" />
+   <Button layoutX="161.0" layoutY="325.0" mnemonicParsing="false" onAction="#uploadImage" text="Upload Image" styleClass="normalButton"/>
    <ImageView fx:id="productImageView" fitHeight="275.0" fitWidth="370.0" layoutX="21.0" layoutY="37.0" />
 </AnchorPane>

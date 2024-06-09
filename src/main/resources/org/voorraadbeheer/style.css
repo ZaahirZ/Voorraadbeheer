@@ -50,6 +50,7 @@
 
 .search-results-table .table-row-cell:hover {
     -fx-background-color: #114153;
+    -fx-cursor: hand;
 }
 
 .table-view .scroll-bar:horizontal {
@@ -66,6 +67,7 @@
 .tabbuttons:hover {
      -fx-cursor: hand;
      -fx-background-color: #05668D;
+    -fx-cursor: hand;
  }
 
 .productInformatie {
@@ -90,8 +92,8 @@
     -fx-padding: 5px;
 }
 
-.label-blue {
-    -fx-text-fill: blue;
+.label-orange {
+    -fx-text-fill: orange;
     -fx-font-size: 18pt;
     -fx-alignment: center;
     -fx-padding: 5px;
@@ -99,13 +101,13 @@
 
 
 .product-image {
-    -fx-padding: 5px; /* Minimal padding */
+    -fx-padding: 5px;
 }
 
 .grid-pane {
-    -fx-padding: 18px; /* Overall padding for the grid */
-    -fx-hgap: 18px; /* Horizontal gap between products */
-    -fx-vgap: 18px; /* Vertical gap between products */
+    -fx-padding: 18px;
+    -fx-hgap: 18px;
+    -fx-vgap: 18px;
 }
 
 #AllProductPageButton {
@@ -122,3 +124,58 @@
     -fx-font-size: 14px;
 }
 
+.aanpasbare-veld-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.aanpasbare-veld-input {
+    -fx-background-color: #05668D;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.normalButton {
+    -fx-background-color: #196477;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-color: transparent;
+}
+
+.normalButton:hover {
+    -fx-background-color: #124850;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+#addFields {
+    -fx-border-color: white;
+    -fx-border-radius: 40%;
+}
+
+#addFields:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #196477;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.aantalinputVeld {
+    -fx-background-color: #05668D;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+}
+
+.delete-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+.delete-button:hover {
+    -fx-cursor: hand;
+}
