@@ -1,7 +1,5 @@
 package org.voorraadbeheer.PageController;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,6 +31,7 @@ public class MainController {
     public void initialize() {
         toolTip();
         zoekProductListener();
+        clickonSearch();
     }
 
     public void searchProduct(String searchText) {
@@ -113,31 +112,33 @@ public class MainController {
             String productName = result.get();
             boolean isDeleted = SQLiteDatabase.deleteProductByName(productName);
 
-            Alert alert;
-            if (isDeleted) {
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Succes");
-                alert.setHeaderText(null);
-                alert.setContentText("Product succesvol verwijderd.");
-            } else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Fout");
-                alert.setHeaderText(null);
-                alert.setContentText("Verwijderen van product mislukt.");
-            }
+            Alert alert = getAlert(isDeleted);
             alert.showAndWait();
         }
+    }
+
+    private Alert getAlert(boolean isDeleted) {
+        Alert alert;
+        if (isDeleted) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Succes");
+            alert.setHeaderText(null);
+            alert.setContentText("Product succesvol verwijderd.");
+        } else {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fout");
+            alert.setHeaderText(null);
+            alert.setContentText("Verwijderen van product mislukt.");
+        }
+        return alert;
     }
 
     public void zoekProductListener(){
         searchResultsTable.setVisible(false);
 
-        zoekProduct.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue) {
-                    searchResultsTable.setVisible(false);
-                }
+        zoekProduct.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                searchResultsTable.setVisible(false);
             }
         });
 
@@ -160,7 +161,15 @@ public class MainController {
         });
     }
 
-    public void productPage() {
-        PageLoader.loadProductPage();
+    private void clickonSearch() {
+        searchResultsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                PageLoader.loadProductPage(newValue);
+            }
+        });
+    }
+
+    public void AllProducts() {
+      PageLoader.loadAllProductPage();
     }
 }

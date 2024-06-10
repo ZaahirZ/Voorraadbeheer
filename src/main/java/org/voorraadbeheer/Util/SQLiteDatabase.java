@@ -4,7 +4,9 @@ import org.voorraadbeheer.Classes.Product;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SQLiteDatabase implements Database {
     private static final String URL = "jdbc:sqlite:voorraadbeheer.db";
@@ -21,19 +23,27 @@ public class SQLiteDatabase implements Database {
     @Override
     public void createTable() {
         try (Connection conn = connect()) {
-            String sql = "CREATE TABLE IF NOT EXISTS products (" +
+            String createProductsTable = "CREATE TABLE IF NOT EXISTS products (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "name TEXT NOT NULL," +
                     "quantity INTEGER NOT NULL," +
                     "price REAL," +
                     "imagePath TEXT" +
                     ")";
+            String createCustomFieldsTable = "CREATE TABLE IF NOT EXISTS custom_fields (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "product_id INTEGER," +
+                    "field_name TEXT NOT NULL," +
+                    "field_value TEXT," +
+                    "FOREIGN KEY (product_id) REFERENCES products(id)" +
+                    ")";
             try (Statement stmt = conn.createStatement()) {
-                stmt.execute(sql);
-                System.out.println("Table 'products' has been created or already exists.");
+                stmt.execute(createProductsTable);
+                stmt.execute(createCustomFieldsTable);
+                System.out.println("Tables 'products' and 'custom_fields' have been created or already exist.");
             }
         } catch (SQLException e) {
-            handleSQLException(e, "Error creating table 'products'");
+            handleSQLException(e, "Error creating tables");
         }
     }
 
@@ -41,7 +51,7 @@ public class SQLiteDatabase implements Database {
     public void insertProduct(String name, int quantity, double price, String imagePath) {
         String sql = "INSERT INTO products(name, quantity, price, imagePath) VALUES(?, ?, ?, ?)";
         try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, name);
             pstmt.setInt(2, quantity);
             pstmt.setDouble(3, price);
@@ -149,6 +159,36 @@ public class SQLiteDatabase implements Database {
             handleSQLException(e, "Error searching products by name");
         }
         return products;
+    }
+
+    public void saveCustomField(int productId, String fieldName, String fieldValue) {
+        String sql = "INSERT INTO custom_fields(product_id, field_name, field_value) VALUES(?, ?, ?)";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, productId);
+            pstmt.setString(2, fieldName);
+            pstmt.setString(3, fieldValue);
+            pstmt.executeUpdate();
+            System.out.println("Custom field saved successfully.");
+        } catch (SQLException e) {
+            handleSQLException(e, "Error saving custom field");
+        }
+    }
+
+    public Map<String, String> getCustomFields(int productId) {
+        Map<String, String> customFields = new HashMap<>();
+        String sql = "SELECT field_name, field_value FROM custom_fields WHERE product_id = ?";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, productId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                customFields.put(rs.getString("field_name"), rs.getString("field_value"));
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, "Error fetching custom fields");
+        }
+        return customFields;
     }
 
     private void handleSQLException(SQLException e, String message) {
