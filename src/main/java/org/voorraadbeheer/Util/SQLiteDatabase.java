@@ -1,6 +1,7 @@
 package org.voorraadbeheer.Util;
 
 import org.voorraadbeheer.Classes.Product;
+import org.voorraadbeheer.Patterns.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -40,7 +41,6 @@ public class SQLiteDatabase implements Database {
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(createProductsTable);
                 stmt.execute(createCustomFieldsTable);
-                System.out.println("Tables 'products' and 'custom_fields' have been created or already exist.");
             }
         } catch (SQLException e) {
             handleSQLException(e, "Error creating tables");
@@ -57,7 +57,6 @@ public class SQLiteDatabase implements Database {
             pstmt.setDouble(3, price);
             pstmt.setString(4, imagePath);
             pstmt.executeUpdate();
-            System.out.println("Product inserted successfully.");
         } catch (SQLException e) {
             handleSQLException(e, "Error inserting product");
         }
@@ -74,7 +73,6 @@ public class SQLiteDatabase implements Database {
             pstmt.setString(4, product.getImagePath());
             pstmt.setInt(5, product.getId());
             pstmt.executeUpdate();
-            System.out.println("Product updated successfully.");
         } catch (SQLException e) {
             handleSQLException(e, "Error updating product");
         }
@@ -95,7 +93,6 @@ public class SQLiteDatabase implements Database {
                 double price = rs.getDouble("price");
                 String imagePath = rs.getString("imagePath");
                 productList.add(new Product(id, name, quantity, price, imagePath));
-                System.out.println("ID: " + id + ", Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Image Path: " + imagePath);
             }
         } catch (SQLException e) {
             handleSQLException(e, "Error fetching products");
@@ -169,7 +166,6 @@ public class SQLiteDatabase implements Database {
             pstmt.setString(2, fieldName);
             pstmt.setString(3, fieldValue);
             pstmt.executeUpdate();
-            System.out.println("Custom field saved successfully.");
         } catch (SQLException e) {
             handleSQLException(e, "Error saving custom field");
         }

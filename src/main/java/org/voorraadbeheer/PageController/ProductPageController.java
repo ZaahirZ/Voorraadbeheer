@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.voorraadbeheer.Classes.Product;
+import org.voorraadbeheer.Patterns.ImageController;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.io.File;
@@ -20,8 +21,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-public class ProductPageController {
-    private static final String IMAGE_DIR = "product_images";
+public class ProductPageController extends ImageController {
+    public Button addCustomFieldButton;
     @FXML
     private ImageView imageView;
     @FXML
@@ -65,17 +66,18 @@ public class ProductPageController {
         }
     }
 
-    private void loadImage(String imagePath) {
+    @Override
+    public void loadImage(String imagePath) {
         Image image;
         if (imagePath != null && !imagePath.isEmpty()) {
             File imageFile = new File(imagePath);
             if (imageFile.exists()) {
                 image = new Image("file:" + imageFile.getAbsolutePath());
             } else {
-                image = new Image("file:" + IMAGE_DIR + "/defaultImage.png");
+                image = new Image("file:" + DEFAULT_IMAGE_PATH);
             }
         } else {
-            image = new Image("file:" + IMAGE_DIR + "/defaultImage.png");
+            image = new Image("file:" + DEFAULT_IMAGE_PATH);
         }
         imageView.setImage(image);
     }
