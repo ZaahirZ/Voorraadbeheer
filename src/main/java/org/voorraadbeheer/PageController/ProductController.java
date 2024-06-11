@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.voorraadbeheer.Classes.Product;
+import org.voorraadbeheer.Templates.ImageController;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.io.File;
@@ -20,7 +21,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.function.UnaryOperator;
 
-public class ProductController {
+public class ProductController extends ImageController {
 
     @FXML
     private TextField naamField;
@@ -38,7 +39,6 @@ public class ProductController {
     private Product product;
 
     private final SQLiteDatabase SQLiteDatabase = new SQLiteDatabase();
-    private static final String IMAGE_DIR = "product_images";
 
     @FXML
     public void initialize() {
@@ -163,7 +163,8 @@ public class ProductController {
         }
     }
 
-    private void loadImage(String imagePath) {
+    @Override
+    public void loadImage(String imagePath) {
         String imagePathToUse = (imagePath != null && !imagePath.isEmpty() && new File(imagePath).exists()) ? imagePath : IMAGE_DIR + "/defaultImage.png";
         productImageView.setImage(new Image("file:" + imagePathToUse));
     }
@@ -173,8 +174,7 @@ public class ProductController {
         return format.format(price).replace(".", ",");
     }
 
-    @FXML
-    private void uploadImage() {
+    public void uploadImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         selectedImageFile = fileChooser.showOpenDialog(productImageView.getScene().getWindow());

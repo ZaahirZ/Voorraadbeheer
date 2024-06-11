@@ -8,12 +8,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import org.voorraadbeheer.Classes.Product;
+import org.voorraadbeheer.Templates.Notification;
 import org.voorraadbeheer.Util.*;
 
 import java.util.List;
 import java.util.Optional;
 
-public class MainController {
+public class MainController extends Notification {
 
     public Button editProduct;
     public Button deleteProduct;
@@ -172,12 +173,13 @@ public class MainController {
       PageLoader.loadAllProductPage();
     }
 
+    @Override
     public void checkLowStockProducts() {
         List<Product> allProducts = SQLiteDatabase.getAllProducts();
         NotificationManager.checkAndNotifyLowStockProducts(allProducts);
     }
 
-    @FXML
+    @Override
     public void showNotification() {
         checkLowStockProducts();
     }

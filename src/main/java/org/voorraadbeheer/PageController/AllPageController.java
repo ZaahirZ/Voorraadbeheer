@@ -7,28 +7,30 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.voorraadbeheer.Classes.Product;
+import org.voorraadbeheer.Util.NotificationManager;
 import org.voorraadbeheer.Util.PageLoader;
+import org.voorraadbeheer.Templates.*;
+import org.voorraadbeheer.Templates.Database;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.io.File;
 import java.util.List;
 
-public class AllPageController {
-
-    private static final String DEFAULT_IMAGE_PATH = "product_images/defaultImage.png";
+public class AllPageController extends Notification {
+    protected final String DEFAULT_IMAGE_PATH = "product_images/defaultImage.png";
+    private Database database;
 
     @FXML
     private GridPane gridPane;
 
-    private final SQLiteDatabase database = new SQLiteDatabase();
-
     @FXML
     public void initialize() {
+        database = new SQLiteDatabase();
         loadProducts();
     }
 
     private void loadProducts() {
-        List<Product> allProducts = database.getAllProducts();
+        List<Product> allProducts = database.getAllProducts(); // Use injected database
         int column = 0;
         int row = 0;
         int maxColumns = 4;
@@ -103,9 +105,14 @@ public class AllPageController {
         PageLoader.loadMainPage();
     }
 
-    @FXML
+    @Override
     public void showNotification() {
-        MainController mainController = new MainController();
-        mainController.checkLowStockProducts();
+        checkLowStockProducts();
+    }
+
+    @Override
+    public void checkLowStockProducts() {
+        List<Product> allProducts = database.getAllProducts(); // Use injected database
+        NotificationManager.checkAndNotifyLowStockProducts(allProducts);
     }
 }

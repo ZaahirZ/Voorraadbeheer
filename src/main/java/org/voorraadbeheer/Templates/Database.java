@@ -1,4 +1,4 @@
-package org.voorraadbeheer.Util;
+package org.voorraadbeheer.Templates;
 
 import org.voorraadbeheer.Classes.Product;
 

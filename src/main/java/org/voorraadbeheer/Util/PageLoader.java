@@ -10,6 +10,7 @@ import org.voorraadbeheer.Classes.Product;
 import org.voorraadbeheer.Main;
 import org.voorraadbeheer.PageController.ProductController;
 import org.voorraadbeheer.PageController.ProductPageController;
+import org.voorraadbeheer.Templates.Database;
 
 import java.io.IOException;
 
@@ -17,16 +18,27 @@ public class PageLoader {
 
     private static Pane rootLayout;
     private static Stage stage;
+    private static Database database;
 
     public static void setRootLayout(Pane rootLayout) {
         PageLoader.rootLayout = rootLayout;
+    }
+
+    public static void setDatabase(Database db) {
+        database = db; // Set the database instance
     }
 
     public static void setStage(Stage stage) {
         PageLoader.stage = stage;
     }
 
-    public static void startApplication(){
+    private static void initializeDatabase() {
+        database = new SQLiteDatabase(); // Initialize the database
+        database.createTable(); // Ensure the table is created
+    }
+
+    public static void startApplication() {
+        initializeDatabase();
         Stage primaryStage = new Stage();
         setStage(primaryStage);
         setRootLayout(new Pane());
@@ -86,6 +98,5 @@ public class PageLoader {
 
     public static void loadAllProductPage() {
         loadPage("AllProductPage.fxml", "Voorraadbeheer - Alle Producten");
-
     }
 }
