@@ -42,3 +42,9 @@ l
 <src/main/java/org/voorraadbeheer/Templates/Notification.java,9\6\96ef88203cadb051873e6aae6ac6ebf5bef31407
 o
 ?src/main/java/org/voorraadbeheer/Templates/ImageController.java,4\6\466c13202d8ab70401c9b1d4e4b1cc1cfc1269bf
+n
+>src/main/java/org/voorraadbeheer/Patterns/ImageController.java,0\7\07a79e39c2ce92ceb8d499b9e1ff0edb2c08f464
+g
+7src/main/java/org/voorraadbeheer/Patterns/Database.java,6\5\6529a3acd68b70442e4442da4257f46137361f67
+k
+;src/main/java/org/voorraadbeheer/Patterns/Notification.java,d\8\d8c0e23fe06a7cd4077ace95f30f1e589cd47bf4

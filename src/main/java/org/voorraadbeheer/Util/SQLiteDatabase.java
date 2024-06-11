@@ -1,7 +1,7 @@
 package org.voorraadbeheer.Util;
 
 import org.voorraadbeheer.Classes.Product;
-import org.voorraadbeheer.Templates.Database;
+import org.voorraadbeheer.Patterns.Database;
 
 import java.sql.*;
 import java.util.ArrayList;

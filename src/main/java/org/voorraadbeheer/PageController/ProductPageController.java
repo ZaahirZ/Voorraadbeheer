@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.voorraadbeheer.Classes.Product;
-import org.voorraadbeheer.Templates.ImageController;
+import org.voorraadbeheer.Patterns.ImageController;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.io.File;

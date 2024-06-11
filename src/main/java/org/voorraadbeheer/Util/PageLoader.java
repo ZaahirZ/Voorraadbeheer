@@ -10,7 +10,7 @@ import org.voorraadbeheer.Classes.Product;
 import org.voorraadbeheer.Main;
 import org.voorraadbeheer.PageController.ProductController;
 import org.voorraadbeheer.PageController.ProductPageController;
-import org.voorraadbeheer.Templates.Database;
+import org.voorraadbeheer.Patterns.Database;
 
 import java.io.IOException;
 

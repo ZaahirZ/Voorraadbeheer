@@ -9,8 +9,8 @@ import javafx.scene.layout.VBox;
 import org.voorraadbeheer.Classes.Product;
 import org.voorraadbeheer.Util.NotificationManager;
 import org.voorraadbeheer.Util.PageLoader;
-import org.voorraadbeheer.Templates.*;
-import org.voorraadbeheer.Templates.Database;
+import org.voorraadbeheer.Patterns.*;
+import org.voorraadbeheer.Patterns.Database;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.io.File;

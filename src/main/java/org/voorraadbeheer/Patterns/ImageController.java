@@ -1,4 +1,4 @@
-package org.voorraadbeheer.Templates;
+package org.voorraadbeheer.Patterns;
 
 public abstract class ImageController {
     protected final String IMAGE_DIR = "product_images";

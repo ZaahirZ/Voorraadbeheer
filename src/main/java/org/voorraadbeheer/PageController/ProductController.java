@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.voorraadbeheer.Classes.Product;
-import org.voorraadbeheer.Templates.ImageController;
+import org.voorraadbeheer.Patterns.ImageController;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.io.File;

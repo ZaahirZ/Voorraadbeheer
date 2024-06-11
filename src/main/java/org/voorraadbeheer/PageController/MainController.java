@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import org.voorraadbeheer.Classes.Product;
-import org.voorraadbeheer.Templates.Notification;
+import org.voorraadbeheer.Patterns.Notification;
 import org.voorraadbeheer.Util.*;
 
 import java.util.List;

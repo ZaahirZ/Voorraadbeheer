@@ -1,4 +1,4 @@
-package org.voorraadbeheer.Templates;
+package org.voorraadbeheer.Patterns;
 
 public abstract class Notification {
     public abstract void showNotification();
