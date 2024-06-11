@@ -38,3 +38,5 @@ V
 &tests/Database/SQLiteDatabaseTest.java,2\8\28da5ec1b6f607c08539d1ead02d8f3214af9b3d
 U
 %src/main/java/SQLiteDatabaseTest.java,c\4\c48cf531fdae1bb4ff5e3c0a72247b2b0bb514ff
+n
+>src/main/java/org/voorraadbeheer/Util/NotificationManager.java,f\7\f71a09f65ee7e4381de9f570390c9f1c48bf2ba8

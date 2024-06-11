@@ -8,8 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import org.voorraadbeheer.Classes.Product;
-import org.voorraadbeheer.Util.PageLoader;
-import org.voorraadbeheer.Util.SQLiteDatabase;
+import org.voorraadbeheer.Util.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -171,5 +170,15 @@ public class MainController {
 
     public void AllProducts() {
       PageLoader.loadAllProductPage();
+    }
+
+    public void checkLowStockProducts() {
+        List<Product> allProducts = SQLiteDatabase.getAllProducts();
+        NotificationManager.checkAndNotifyLowStockProducts(allProducts);
+    }
+
+    @FXML
+    public void showNotification() {
+        checkLowStockProducts();
     }
 }

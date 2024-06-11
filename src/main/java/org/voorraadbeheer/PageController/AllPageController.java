@@ -31,7 +31,7 @@ public class AllPageController {
         List<Product> allProducts = database.getAllProducts();
         int column = 0;
         int row = 0;
-        int maxColumns = 4; // Adjust this value based on your UI design
+        int maxColumns = 4;
 
         for (Product product : allProducts) {
             VBox productBox = createProductBox(product);
@@ -45,9 +45,8 @@ public class AllPageController {
         }
 
         gridPane.setHgap(100);
-        gridPane.setVgap(100); // Adding vertical gap as well
+        gridPane.setVgap(100);
     }
-
 
     private VBox createProductBox(Product product) {
         VBox productBox = new VBox(20);
@@ -102,5 +101,11 @@ public class AllPageController {
     @FXML
     private void loadmainMenu() {
         PageLoader.loadMainPage();
+    }
+
+    @FXML
+    public void showNotification() {
+        MainController mainController = new MainController();
+        mainController.checkLowStockProducts();
     }
 }

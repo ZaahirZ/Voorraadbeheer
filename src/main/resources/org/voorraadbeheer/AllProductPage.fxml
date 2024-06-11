@@ -19,6 +19,15 @@
             <children>
                 <Button id="AllProductPageButton" layoutX="15.0" layoutY="195.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" text="All Products" />
                 <Button layoutX="14.0" layoutY="253.0" mnemonicParsing="false" onAction="#loadmainMenu" prefHeight="40.0" prefWidth="188.0" styleClass="tabbuttons" text="Search Product" />
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="28.0" styleClass="normalButton" onAction="#showNotification">
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" >
+                     <image>
+                        <Image url="@Images/bell.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             </children>
         </Pane>
     </children>

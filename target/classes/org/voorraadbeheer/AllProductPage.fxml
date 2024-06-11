@@ -17,17 +17,17 @@
         </ScrollPane>
         <Pane prefHeight="720.0" prefWidth="215.0" styleClass="sidebarPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button id="profilePicture" layoutX="14.0" layoutY="21.0" minWidth="53.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="53.0" textFill="WHITE">
-                    <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@Images/profile-user.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
                 <Button id="AllProductPageButton" layoutX="15.0" layoutY="195.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" text="All Products" />
                 <Button layoutX="14.0" layoutY="253.0" mnemonicParsing="false" onAction="#loadmainMenu" prefHeight="40.0" prefWidth="188.0" styleClass="tabbuttons" text="Search Product" />
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="28.0" styleClass="normalButton" onAction="#showNotification">
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" >
+                     <image>
+                        <Image url="@Images/bell.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             </children>
         </Pane>
     </children>

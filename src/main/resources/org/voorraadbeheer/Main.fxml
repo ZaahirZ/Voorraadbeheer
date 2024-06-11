@@ -27,6 +27,15 @@
             <children>
             <Button layoutX="15.0" layoutY="195.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" text="All Products" styleClass="tabbuttons" onAction="#AllProducts" />
                 <Button layoutX="14.0" layoutY="253.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" text="Search Product" styleClass="tabbuttons" id="AllProductPageButton"/>
+                <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="28.0" styleClass="normalButton" onAction="#showNotification">
+                    <graphic>
+                        <ImageView fitHeight="46.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" >
+                            <image>
+                                <Image url="@Images/bell.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
             </children>
         </Pane>
         <Button fx:id="voegProduct" layoutX="1065.0" layoutY="14.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="31.0" prefWidth="61.0" styleClass="productButton">
