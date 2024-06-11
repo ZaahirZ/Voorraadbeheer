@@ -48,3 +48,7 @@ g
 7src/main/java/org/voorraadbeheer/Patterns/Database.java,6\5\6529a3acd68b70442e4442da4257f46137361f67
 k
 ;src/main/java/org/voorraadbeheer/Patterns/Notification.java,d\8\d8c0e23fe06a7cd4077ace95f30f1e589cd47bf4
+g
+7src/main/java/org/voorraadbeheer/Patterns/Observer.java,1\7\17271b4250214f96d1404a3fefe6746c27b187d1
+m
+=src/main/java/org/voorraadbeheer/Classes/ProductObserver.java,7\e\7eb32efd59530a28f996436113e2e92d38f6d95b

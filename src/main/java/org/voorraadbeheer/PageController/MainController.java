@@ -8,8 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import org.voorraadbeheer.Classes.Product;
+import org.voorraadbeheer.Classes.ProductObserver;
+import org.voorraadbeheer.Util.PageLoader;
+import org.voorraadbeheer.Util.NotificationManager;
 import org.voorraadbeheer.Patterns.Notification;
-import org.voorraadbeheer.Util.*;
+import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +26,15 @@ public class MainController extends Notification {
     public TableView<Product> searchResultsTable;
     @FXML
     private AnchorPane root;
+    private ProductObserver productObserver;
 
-    SQLiteDatabase SQLiteDatabase = new SQLiteDatabase();
-
+    private SQLiteDatabase SQLiteDatabase = new SQLiteDatabase();
 
     @FXML
     public void initialize() {
+        productObserver = ProductObserver.getInstance();
+        productObserver.addObserver(this);
+
         toolTip();
         zoekProductListener();
         clickonSearch();
@@ -52,10 +58,15 @@ public class MainController extends Notification {
         searchResultsTable.requestLayout();
     }
 
+    public void toolTip() {
+        Tooltip voegProductTooltip = createInstantTooltip("Voeg je product toe");
+        Tooltip.install(voegProduct, voegProductTooltip);
 
-    @FXML
-    public void addProduct() {
-        PageLoader.loadProductController(null); // Pass null to indicate adding a new product
+        Tooltip deleteProductTooltip = createInstantTooltip("Verwijder je product");
+        Tooltip.install(deleteProduct, deleteProductTooltip);
+
+        Tooltip editProductTooltip = createInstantTooltip("Wijzig je product");
+        Tooltip.install(editProduct, editProductTooltip);
     }
 
     private Tooltip createInstantTooltip(String text) {
@@ -66,15 +77,11 @@ public class MainController extends Notification {
         return tooltip;
     }
 
-    public void toolTip() {
-        Tooltip voegProductTooltip = createInstantTooltip("Voeg je product toe");
-        Tooltip.install(voegProduct, voegProductTooltip);
 
-        Tooltip deleteProductTooltip = createInstantTooltip("Verwijder je product");
-        Tooltip.install(deleteProduct, deleteProductTooltip);
-
-        Tooltip editProductTooltip = createInstantTooltip("Wijzig je product");
-        Tooltip.install(editProduct, editProductTooltip);
+    @FXML
+    public void addProduct() {
+        PageLoader.loadProductController(null);
+        productObserver.notifyObservers();
     }
 
     @FXML
@@ -90,6 +97,7 @@ public class MainController extends Notification {
             Product product = SQLiteDatabase.getProductByName(productName);
             if (product != null) {
                 PageLoader.loadProductController(product);
+                productObserver.notifyObservers();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Fout");
@@ -114,6 +122,9 @@ public class MainController extends Notification {
 
             Alert alert = getAlert(isDeleted);
             alert.showAndWait();
+            if (isDeleted) {
+                productObserver.notifyObservers();
+            }
         }
     }
 
@@ -133,7 +144,7 @@ public class MainController extends Notification {
         return alert;
     }
 
-    public void zoekProductListener(){
+    public void zoekProductListener() {
         searchResultsTable.setVisible(false);
 
         zoekProduct.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -144,7 +155,6 @@ public class MainController extends Notification {
 
         zoekProduct.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-
                 searchResultsTable.setVisible(true);
                 searchProduct(newValue);
             } else {
@@ -170,7 +180,7 @@ public class MainController extends Notification {
     }
 
     public void AllProducts() {
-      PageLoader.loadAllProductPage();
+        PageLoader.loadAllProductPage();
     }
 
     @Override
@@ -183,4 +193,10 @@ public class MainController extends Notification {
     public void showNotification() {
         checkLowStockProducts();
     }
+
+    @Override
+    public void update() {
+        checkLowStockProducts();
+    }
+
 }

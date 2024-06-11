@@ -2,15 +2,16 @@ package org.voorraadbeheer.PageController;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.voorraadbeheer.Classes.Product;
+import org.voorraadbeheer.Classes.ProductObserver;
 import org.voorraadbeheer.Util.NotificationManager;
 import org.voorraadbeheer.Util.PageLoader;
 import org.voorraadbeheer.Patterns.*;
-import org.voorraadbeheer.Patterns.Database;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
 import java.io.File;
@@ -18,7 +19,9 @@ import java.util.List;
 
 public class AllPageController extends Notification {
     protected final String DEFAULT_IMAGE_PATH = "product_images/defaultImage.png";
+    public ScrollPane scrollPane;
     private Database database;
+    private ProductObserver productObserver;
 
     @FXML
     private GridPane gridPane;
@@ -26,16 +29,23 @@ public class AllPageController extends Notification {
     @FXML
     public void initialize() {
         database = new SQLiteDatabase();
+        productObserver = ProductObserver.getInstance();
+        productObserver.addObserver(this);
         loadProducts();
     }
 
     private void loadProducts() {
-        List<Product> allProducts = database.getAllProducts(); // Use injected database
+        List<Product> allProducts = database.getAllProducts();
+        displayProducts(allProducts);
+    }
+
+    private void displayProducts(List<Product> products) {
+        gridPane.getChildren().clear();
         int column = 0;
         int row = 0;
         int maxColumns = 4;
 
-        for (Product product : allProducts) {
+        for (Product product : products) {
             VBox productBox = createProductBox(product);
             gridPane.add(productBox, column, row);
 
@@ -112,7 +122,12 @@ public class AllPageController extends Notification {
 
     @Override
     public void checkLowStockProducts() {
-        List<Product> allProducts = database.getAllProducts(); // Use injected database
+        List<Product> allProducts = database.getAllProducts();
         NotificationManager.checkAndNotifyLowStockProducts(allProducts);
+    }
+
+    @Override
+    public void update() {
+        loadProducts();
     }
 }

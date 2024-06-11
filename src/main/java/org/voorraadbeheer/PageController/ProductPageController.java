@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ProductPageController extends ImageController {
+    public Button addCustomFieldButton;
     @FXML
     private ImageView imageView;
     @FXML

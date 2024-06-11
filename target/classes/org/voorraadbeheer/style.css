@@ -106,6 +106,7 @@
     -fx-border-color: #05668D;
     -fx-text-fill: white;
     -fx-font-size: 14px;
+    -fx-cursor: hand;
 }
 
 .aanpasbare-veld-label {
@@ -152,6 +153,13 @@
     -fx-border-color: transparent transparent white transparent;
     -fx-text-fill: white;
     -fx-font-size: 22px;
+}
+
+.textProductField {
+    -fx-background-color: #05668D;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
 }
 
 .delete-button {
