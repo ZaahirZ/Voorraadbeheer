@@ -38,7 +38,7 @@ public class ProductController extends ImageController {
     private File selectedImageFile;
     private Product product;
 
-    private final SQLiteDatabase SQLiteDatabase = new SQLiteDatabase();
+    private final SQLiteDatabase sqLiteDatabase = new SQLiteDatabase();
 
     @FXML
     public void initialize() {
@@ -77,10 +77,9 @@ public class ProductController extends ImageController {
         Double price = parsePrice(prijsField.getText().trim());
 
         if (isInputValid(name, quantity, price)) {
-            String imagePath = selectedImageFile != null ? copyImageToDirectory(selectedImageFile) : (product != null ? product.getImagePath() : null);
-
+            String imagePath = getImagePath();
             if (product == null) {
-                SQLiteDatabase.insertProduct(name, quantity, price, imagePath);
+                insertProduct(name, quantity, price, imagePath);
                 showAlert(Alert.AlertType.INFORMATION, "Product Toegevoegd", "Product is succesvol toegevoegd.");
             } else {
                 updateProduct(name, quantity, price, imagePath);
@@ -90,28 +89,20 @@ public class ProductController extends ImageController {
         }
     }
 
+    private String getImagePath() {
+        return selectedImageFile != null ? copyImageToDirectory(selectedImageFile) : (product != null ? product.getImagePath() : null);
+    }
+
+    private void insertProduct(String name, Integer quantity, Double price, String imagePath) {
+        sqLiteDatabase.insertProduct(name, quantity, price, imagePath);
+    }
+
     private void updateProduct(String name, Integer quantity, Double price, String imagePath) {
         product.setName(name);
         product.setQuantity(quantity);
         product.setPrice(price);
         product.setImagePath(imagePath);
-        SQLiteDatabase.updateProduct(product);
-    }
-
-    private String copyImageToDirectory(File imageFile) {
-        try {
-            Path targetDirectory = Paths.get(IMAGE_DIR);
-            if (!Files.exists(targetDirectory)) Files.createDirectories(targetDirectory);
-
-            String newFileName = System.currentTimeMillis() + "_" + imageFile.getName();
-            Path targetPath = targetDirectory.resolve(newFileName);
-            Files.copy(imageFile.toPath(), targetPath);
-
-            return targetPath.toString();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Fout bij kopiëren", "Kon afbeelding niet kopiëren: " + e.getMessage());
-            return null;
-        }
+        sqLiteDatabase.updateProduct(product);
     }
 
     private Integer parseQuantity(String text) {
@@ -183,4 +174,21 @@ public class ProductController extends ImageController {
             productImageView.setImage(new Image("file:" + selectedImageFile.getAbsolutePath()));
         }
     }
+
+    private String copyImageToDirectory(File imageFile) {
+        try {
+            Path targetDirectory = Paths.get(IMAGE_DIR);
+            if (!Files.exists(targetDirectory)) Files.createDirectories(targetDirectory);
+
+            String newFileName = System.currentTimeMillis() + "_" + imageFile.getName();
+            Path targetPath = targetDirectory.resolve(newFileName);
+            Files.copy(imageFile.toPath(), targetPath);
+
+            return targetPath.toString();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Fout bij kopiëren", "Kon afbeelding niet kopiëren: " + e.getMessage());
+            return null;
+        }
+    }
+
 }

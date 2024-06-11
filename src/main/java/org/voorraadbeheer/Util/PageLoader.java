@@ -25,7 +25,7 @@ public class PageLoader {
     }
 
     public static void setDatabase(Database db) {
-        database = db; // Set the database instance
+        database = db;
     }
 
     public static void setStage(Stage stage) {
@@ -33,8 +33,8 @@ public class PageLoader {
     }
 
     private static void initializeDatabase() {
-        database = new SQLiteDatabase(); // Initialize the database
-        database.createTable(); // Ensure the table is created
+        database = new SQLiteDatabase();
+        database.createTable();
     }
 
     public static void startApplication() {

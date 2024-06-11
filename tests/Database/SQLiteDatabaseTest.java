@@ -26,7 +26,6 @@ public class SQLiteDatabaseTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        // Clean up the database after each test
         File dbFile = new File("voorraadbeheer.db");
         if (dbFile.exists()) {
             dbFile.delete();
