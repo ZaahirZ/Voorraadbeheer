@@ -1,10 +1,4 @@
-
-#productZoeker {
-    -fx-background-color: #05668D;
-    -fx-border-color: transparent transparent white transparent;
-    -fx-text-fill: white;
-}
-
+/* CSS File (style.css) */
 .root {
     -fx-background-color: #05668D;
 }
@@ -15,4 +9,170 @@
 
 #profilePicture {
     -fx-background-color: transparent;
+}
+
+.productButton {
+    -fx-background-color: transparent;
+}
+
+.productButton:hover {
+    -fx-cursor: hand;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+.search-results-table {
+    -fx-background-color: white;
+}
+
+.search-results-table .column-header {
+    -fx-background-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+}
+
+.search-results-table .table-cell {
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+}
+
+.search-results-table .table-row-cell {
+    -fx-background-color: #ffffff;
+}
+
+.search-results-table .table-row-cell:hover {
+    -fx-background-color: #114153;
+    -fx-cursor: hand;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.tabbuttons {
+    -fx-background-color: transparent;
+    -fx-border-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.tabbuttons:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #05668D;
+    -fx-cursor: hand;
+}
+
+.productInformatie {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* Different color styles */
+.label-green {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18pt;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.label-red {
+    -fx-text-fill: red;
+    -fx-font-size: 18pt;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.product-image {
+    -fx-padding: 5px;
+}
+
+.scroll-pane {
+    -fx-background-color: #05668D;
+}
+
+#AllProductPageButton {
+    -fx-background-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-color: transparent;
+}
+
+#AllProductPageButton:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: #05668D;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.aanpasbare-veld-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.aanpasbare-veld-input {
+    -fx-background-color: #05668D;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.normalButton {
+    -fx-background-color: #196477;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-color: transparent;
+}
+
+.normalButton:hover {
+    -fx-background-color: #124850;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+#addFields {
+    -fx-border-color: white;
+    -fx-border-radius: 40%;
+}
+
+#addFields:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #196477;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.aantalinputVeld {
+    -fx-background-color: #05668D;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+}
+
+.textProductField {
+    -fx-background-color: #05668D;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.delete-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+.delete-button:hover {
+    -fx-cursor: hand;
+}
+
+.scroll-pane {
+    -fx-background: #05668D;
+    -fx-border-color: transparent;
 }
