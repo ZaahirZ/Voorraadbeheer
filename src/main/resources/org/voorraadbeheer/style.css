@@ -1,10 +1,4 @@
-
-.textProductField {
-    -fx-background-color: #05668D;
-    -fx-border-color: transparent transparent white transparent;
-    -fx-text-fill: white;
-}
-
+/* CSS File (style.css) */
 .root {
     -fx-background-color: #05668D;
 }
@@ -65,10 +59,10 @@
 }
 
 .tabbuttons:hover {
-     -fx-cursor: hand;
-     -fx-background-color: #05668D;
     -fx-cursor: hand;
- }
+    -fx-background-color: #05668D;
+    -fx-cursor: hand;
+}
 
 .productInformatie {
     -fx-font-size: 20px;
@@ -79,7 +73,7 @@
 
 /* Different color styles */
 .label-green {
-    -fx-text-fill: green;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 18pt;
     -fx-alignment: center;
     -fx-padding: 5px;
@@ -92,22 +86,12 @@
     -fx-padding: 5px;
 }
 
-.label-orange {
-    -fx-text-fill: orange;
-    -fx-font-size: 18pt;
-    -fx-alignment: center;
-    -fx-padding: 5px;
-}
-
-
 .product-image {
     -fx-padding: 5px;
 }
 
-.grid-pane {
-    -fx-padding: 18px;
-    -fx-hgap: 18px;
-    -fx-vgap: 18px;
+.scroll-pane {
+    -fx-background-color: #05668D;
 }
 
 #AllProductPageButton {
@@ -178,4 +162,9 @@
 
 .delete-button:hover {
     -fx-cursor: hand;
+}
+
+.scroll-pane {
+    -fx-background: #05668D;
+    -fx-border-color: transparent;
 }

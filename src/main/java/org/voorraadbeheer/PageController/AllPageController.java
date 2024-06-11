@@ -30,14 +30,24 @@ public class AllPageController {
     private void loadProducts() {
         List<Product> allProducts = database.getAllProducts();
         int column = 0;
+        int row = 0;
+        int maxColumns = 4; // Adjust this value based on your UI design
 
         for (Product product : allProducts) {
             VBox productBox = createProductBox(product);
-            gridPane.add(productBox, column++, 0);
+            gridPane.add(productBox, column, row);
+
+            column++;
+            if (column == maxColumns) {
+                column = 0;
+                row++;
+            }
         }
 
         gridPane.setHgap(100);
+        gridPane.setVgap(100); // Adding vertical gap as well
     }
+
 
     private VBox createProductBox(Product product) {
         VBox productBox = new VBox(20);
@@ -54,8 +64,8 @@ public class AllPageController {
     private ImageView createProductImageView(String imagePath) {
         Image image = loadImage(imagePath);
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
+        imageView.setFitHeight(170);
+        imageView.setFitWidth(170);
         return imageView;
     }
 
@@ -68,8 +78,6 @@ public class AllPageController {
     private String getProductQuantityStyle(int quantity) {
         if (quantity > 10) {
             return "label-green";
-        } else if (quantity > 5) {
-            return "label-orange";
         } else {
             return "label-red";
         }

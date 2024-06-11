@@ -34,3 +34,7 @@ z
 Jsrc/main/java/org/voorraadbeheer/PageController/ProductPageController.java,2\f\2fd3fea63f44783fdba392e5473984c523f469a3
 v
 Fsrc/main/java/org/voorraadbeheer/PageController/AllPageController.java,5\9\592d1aa3c9713c27c2ab505c0b85decffc85a400
+V
+&tests/Database/SQLiteDatabaseTest.java,2\8\28da5ec1b6f607c08539d1ead02d8f3214af9b3d
+U
+%src/main/java/SQLiteDatabaseTest.java,c\4\c48cf531fdae1bb4ff5e3c0a72247b2b0bb514ff
