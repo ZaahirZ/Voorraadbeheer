@@ -48,3 +48,7 @@ m
 =src/main/java/org/voorraadbeheer/Classes/ProductObserver.java,7\e\7eb32efd59530a28f996436113e2e92d38f6d95b
 \
 ,tests/Controllers/ProductControllerTest.java,5\3\536f0c8f88e12408107e168f6b8ab229970e45f8
+^
+.tests/Controllers/NotificationManagerTest.java,7\0\70f7c02420bea1bf1f38a5d6460e18436685c612
+`
+0tests/Controllers/ProductPageControllerTest.java,8\a\8a28f3a0801990563b3af34ba33999d6dfac3422

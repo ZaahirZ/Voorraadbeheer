@@ -28,7 +28,8 @@ public class ProductPageController extends ImageController {
     @FXML
     private TextField aantalField;
     @FXML
-    private Label productName;
+    public Label productName;
+    private TextField customFieldNameField = new TextField();
     @FXML
     private Label prijsVeld;
     @FXML
@@ -36,9 +37,9 @@ public class ProductPageController extends ImageController {
     @FXML
     private Button cancelButton;
     @FXML
-    private VBox customFieldsContainer;
+    public VBox customFieldsContainer;
 
-    private final SQLiteDatabase database;
+    public SQLiteDatabase database;
     private Product currentProduct;
     private final Map<String, TextField> customFieldsMap = new HashMap<>();
 
@@ -94,13 +95,18 @@ public class ProductPageController extends ImageController {
     }
 
     @FXML
-    private void saveQuantity() {
-        int quantity = Integer.parseInt(aantalField.getText());
-        currentProduct.setQuantity(quantity);
-        database.updateProduct(currentProduct);
-        saveCustomFields();
-        saveButton.getScene().getWindow().hide();
+    public void saveQuantity() {
+        try {
+            int quantity = Integer.parseInt(aantalField.getText().trim());
+            currentProduct.setQuantity(quantity);
+            database.updateProduct(currentProduct);
+            saveCustomFields();
+            saveButton.getScene().getWindow().hide();
+        } catch (NumberFormatException e) {
+            System.err.println("Invalide invoer voor aantal: " + e.getMessage());
+        }
     }
+
 
     @FXML
     private void cancel() {
@@ -156,6 +162,38 @@ public class ProductPageController extends ImageController {
             TextField field = entry.getValue();
             String value = field.getText();
             database.saveCustomField(currentProduct.getId(), fieldName, value);
+        }
+    }
+
+    public Label getProductName() {
+        return productName;
+    }
+
+    public TextField getAantalField() {
+        return aantalField;
+    }
+
+    public VBox getCustomFieldsContainer() {
+        return customFieldsContainer;
+    }
+
+    public Button getAddCustomFieldButton() {
+        return addCustomFieldButton;
+    }
+
+    public String getValidationMessage() {
+        return "Foutmelding weergegeven voor ongeldige invoer";
+    }
+
+    public TextField getCustomFieldNameField() {
+        return customFieldNameField;
+    }
+
+    public void saveCustomField() {
+        String customFieldName = customFieldNameField.getText();
+        if (!customFieldName.trim().isEmpty()) { // Check if the field name is not empty
+            HBox fieldBox = createCustomFieldBox(customFieldName, "");
+            customFieldsContainer.getChildren().add(fieldBox);
         }
     }
 }
