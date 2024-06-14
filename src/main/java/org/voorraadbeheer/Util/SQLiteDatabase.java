@@ -49,6 +49,9 @@ public class SQLiteDatabase implements Database {
 
     @Override
     public void insertProduct(String name, int quantity, double price, String imagePath) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
         String sql = "INSERT INTO products(name, quantity, price, imagePath) VALUES(?, ?, ?, ?)";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -189,5 +192,33 @@ public class SQLiteDatabase implements Database {
 
     private void handleSQLException(SQLException e, String message) {
         System.err.println(message + ": " + e.getMessage());
+    }
+
+
+    public Product getProductById(int id) {
+        // Create a new connection to your SQLite database
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:your_database.db")) {
+            // Create a new SQL statement
+            try (Statement stmt = conn.createStatement()) {
+                // Execute the SQL query
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Products WHERE id = " + id);
+
+                // If a result is returned
+                if (rs.next()) {
+                    // Create a new Product object from the result
+                    String name = rs.getString("name");
+                    int quantity = rs.getInt("quantity");
+                    double price = rs.getDouble("price");
+                    String imagePath = rs.getString("imagePath");
+
+                    return new Product(id, name, quantity, price, imagePath);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // If no product was found, return null
+        return null;
     }
 }
