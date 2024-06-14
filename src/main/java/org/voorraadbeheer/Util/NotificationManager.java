@@ -12,9 +12,9 @@ public class NotificationManager {
 
     private static final int LOW_STOCK_THRESHOLD = 5; // Example threshold for low stock
 
-    public static void showLowStockNotification(List<Product> lowStockProducts) {
+    public static Alert showLowStockNotification(List<Product> lowStockProducts) {
         if (lowStockProducts == null || lowStockProducts.isEmpty()) {
-            return;
+            return null;
         }
 
         StringBuilder content = new StringBuilder("De volgende producten zijn laag op voorraad:\n");
@@ -23,6 +23,7 @@ public class NotificationManager {
         }
 
         showAlert(content.toString());
+        return null;
     }
 
     private static void showAlert(String content) {

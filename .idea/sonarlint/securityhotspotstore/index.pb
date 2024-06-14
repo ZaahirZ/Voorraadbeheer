@@ -36,12 +36,6 @@ V
 &tests/Database/SQLiteDatabaseTest.java,2\8\28da5ec1b6f607c08539d1ead02d8f3214af9b3d
 n
 >src/main/java/org/voorraadbeheer/Util/NotificationManager.java,f\7\f71a09f65ee7e4381de9f570390c9f1c48bf2ba8
-h
-8src/main/java/org/voorraadbeheer/Templates/Database.java,4\0\402d5bcc6810e33e34c49a35ea5bbdeaadd7f45b
-l
-<src/main/java/org/voorraadbeheer/Templates/Notification.java,9\6\96ef88203cadb051873e6aae6ac6ebf5bef31407
-o
-?src/main/java/org/voorraadbeheer/Templates/ImageController.java,4\6\466c13202d8ab70401c9b1d4e4b1cc1cfc1269bf
 n
 >src/main/java/org/voorraadbeheer/Patterns/ImageController.java,0\7\07a79e39c2ce92ceb8d499b9e1ff0edb2c08f464
 g
@@ -52,3 +46,9 @@ g
 7src/main/java/org/voorraadbeheer/Patterns/Observer.java,1\7\17271b4250214f96d1404a3fefe6746c27b187d1
 m
 =src/main/java/org/voorraadbeheer/Classes/ProductObserver.java,7\e\7eb32efd59530a28f996436113e2e92d38f6d95b
+\
+,tests/Controllers/ProductControllerTest.java,5\3\536f0c8f88e12408107e168f6b8ab229970e45f8
+^
+.tests/Controllers/NotificationManagerTest.java,7\0\70f7c02420bea1bf1f38a5d6460e18436685c612
+`
+0tests/Controllers/ProductPageControllerTest.java,8\a\8a28f3a0801990563b3af34ba33999d6dfac3422

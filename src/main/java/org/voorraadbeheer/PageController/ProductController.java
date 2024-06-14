@@ -76,7 +76,7 @@ public class ProductController extends ImageController {
         Integer quantity = parseQuantity(aantalField.getText().trim());
         Double price = parsePrice(prijsField.getText().trim());
 
-        if (isInputValid(name, quantity, price)) {
+        if (isProductDataValid(name, quantity, price)) {
             String imagePath = getImagePath();
             if (product == null) {
                 insertProduct(name, quantity, price, imagePath);
@@ -86,8 +86,12 @@ public class ProductController extends ImageController {
                 showAlert(Alert.AlertType.INFORMATION, "Product Gewijzigd", "Product is succesvol gewijzigd.");
             }
             closeWindow();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Controleer uw invoer en probeer het opnieuw.");
         }
     }
+
+
 
     private String getImagePath() {
         return selectedImageFile != null ? copyImageToDirectory(selectedImageFile) : (product != null ? product.getImagePath() : null);
@@ -121,14 +125,6 @@ public class ProductController extends ImageController {
             showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Prijs moet een geldig nummer zijn.");
             return null;
         }
-    }
-
-    private boolean isInputValid(String name, Integer quantity, Double price) {
-        if (name.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Ongeldige Invoer", "Productnaam mag niet leeg zijn.");
-            return false;
-        }
-        return quantity != null && price != null;
     }
 
     private void closeWindow() {
@@ -191,4 +187,11 @@ public class ProductController extends ImageController {
         }
     }
 
+    public boolean isProductDataValid(String name, Integer quantity, Double price) {
+        boolean productNameExists = name != null && !name.trim().isEmpty();
+        boolean quantityNotNull = quantity != null && quantity >= 0;
+        boolean priceNotNull = price != null && price >= 0;
+
+        return productNameExists && quantityNotNull && priceNotNull;
+    }
 }
