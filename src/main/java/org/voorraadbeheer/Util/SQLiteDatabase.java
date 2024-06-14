@@ -49,6 +49,9 @@ public class SQLiteDatabase implements Database {
 
     @Override
     public void insertProduct(String name, int quantity, double price, String imagePath) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
         String sql = "INSERT INTO products(name, quantity, price, imagePath) VALUES(?, ?, ?, ?)";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {

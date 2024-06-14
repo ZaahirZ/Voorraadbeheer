@@ -165,35 +165,21 @@ public class ProductPageController extends ImageController {
         }
     }
 
-    public Label getProductName() {
-        return productName;
-    }
-
     public TextField getAantalField() {
         return aantalField;
     }
 
-    public VBox getCustomFieldsContainer() {
-        return customFieldsContainer;
+
+    public Label getProductNaamField() {
+        return productName;
     }
 
-    public Button getAddCustomFieldButton() {
-        return addCustomFieldButton;
+    public Label getPrijsField() {
+        return prijsVeld;
     }
 
-    public String getValidationMessage() {
-        return "Foutmelding weergegeven voor ongeldige invoer";
+    public void setPrijsField(String text) {
+        prijsVeld.setText(text);
     }
 
-    public TextField getCustomFieldNameField() {
-        return customFieldNameField;
-    }
-
-    public void saveCustomField() {
-        String customFieldName = customFieldNameField.getText();
-        if (!customFieldName.trim().isEmpty()) { // Check if the field name is not empty
-            HBox fieldBox = createCustomFieldBox(customFieldName, "");
-            customFieldsContainer.getChildren().add(fieldBox);
-        }
-    }
 }

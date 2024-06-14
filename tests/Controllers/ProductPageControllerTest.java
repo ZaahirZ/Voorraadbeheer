@@ -55,152 +55,188 @@ public class ProductPageControllerTest extends ApplicationTest {
 
     @Test
     void test_Case1() throws InterruptedException {
+        // Scenario: Lege aantalveld, Lege Productnaam, Null, Lege Prijs
         Product testProduct = new Product(1, "", 0, 0.0);
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
             controller.setProduct(testProduct);
             controller.getAantalField().setText("");
+            controller.getProductNaamField().setText("");
+            controller.setPrijsField("");
             controller.saveQuantity();
             latch.countDown();
         });
 
         latch.await(2, TimeUnit.SECONDS);
 
-        assertEquals("", controller.productName.getText());
+        assertEquals("", controller.getProductNaamField().getText());
         assertEquals(0, testProduct.getQuantity());
+        assertEquals(0.0, testProduct.getPrice());
         verify(mockDatabase, never()).updateProduct(any());
     }
 
     @Test
     void test_Case2() throws InterruptedException {
-        Product testProduct = new Product(1, "", 0, 0.0);
-        CountDownLatch latch = new CountDownLatch(1);
-
-        Platform.runLater(() -> {
-            controller.setProduct(testProduct);
-            controller.getAantalField().setText("10"); // Numeric value
-            controller.saveQuantity();
-            latch.countDown();
-        });
-
-        latch.await(2, TimeUnit.SECONDS);
-
-        assertEquals("", controller.productName.getText());
-        assertEquals(10, testProduct.getQuantity());
-        verify(mockDatabase, times(1)).updateProduct(testProduct);
-    }
-
-    @Test
-    void test_Case3() throws InterruptedException {
-        Product testProduct = new Product(1, "Test Product", 0, 0.0);
+        // Scenario: Lege aantalveld, Lege productnaam, Geeft product, Wel prijs
+        Product testProduct = new Product(1, "", 0, 10.0);
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
             controller.setProduct(testProduct);
             controller.getAantalField().setText("");
+            controller.getProductNaamField().setText("Test Product");
+            controller.setPrijsField("10.0");
             controller.saveQuantity();
             latch.countDown();
         });
 
         latch.await(2, TimeUnit.SECONDS);
 
-        assertEquals("TEST PRODUCT", controller.productName.getText());
+        assertEquals("Test Product", controller.getProductNaamField().getText());
         assertEquals(0, testProduct.getQuantity());
+        assertEquals(10.0, testProduct.getPrice());
+        verify(mockDatabase, never()).updateProduct(any());
+    }
+
+    @Test
+    void test_Case3() throws InterruptedException {
+        // Scenario: Lege aantalveld, Productnaam, Null, Lege Prijs
+        Product testProduct = new Product(1, "", 0, 0.0);
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Platform.runLater(() -> {
+            controller.setProduct(testProduct);
+            controller.getAantalField().setText("");
+            controller.getProductNaamField().setText("Test Product");
+            controller.setPrijsField("");
+            controller.saveQuantity();
+            latch.countDown();
+        });
+
+        latch.await(2, TimeUnit.SECONDS);
+
+        assertEquals("Test Product", controller.getProductNaamField().getText());
+        assertEquals(0, testProduct.getQuantity());
+        assertEquals(0.0, testProduct.getPrice());
         verify(mockDatabase, never()).updateProduct(any());
     }
 
     @Test
     void test_Case4() throws InterruptedException {
-        Product testProduct = new Product(1, "Test Product", 0, 0.0);
+        // Scenario: Lege aantalveld, Productnaam, Geeft product, Wel prijs
+        Product testProduct = new Product(1, "", 0, 15.0);
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
             controller.setProduct(testProduct);
-            controller.getAantalField().setText("15"); // Numeric value
+            controller.getAantalField().setText("");
+            controller.getProductNaamField().setText("Test Product");
+            controller.setPrijsField("15.0");
             controller.saveQuantity();
             latch.countDown();
         });
 
         latch.await(2, TimeUnit.SECONDS);
 
-        assertEquals("TEST PRODUCT", controller.productName.getText());
-        assertEquals(15, testProduct.getQuantity());
-        verify(mockDatabase, times(1)).updateProduct(testProduct);
+        assertEquals("Test Product", controller.getProductNaamField().getText());
+        assertEquals(0, testProduct.getQuantity());
+        assertEquals(15.0, testProduct.getPrice());
+        verify(mockDatabase, never()).updateProduct(any());
     }
 
     @Test
     void test_Case5() throws InterruptedException {
+        // Scenario: Nummers in aantalveld, Lege productnaam, Null, Lege prijs
         Product testProduct = new Product(1, "", 0, 0.0);
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
             controller.setProduct(testProduct);
-            controller.getAantalField().setText("");
+            controller.getAantalField().setText("5");
+            controller.getProductNaamField().setText("");
+            controller.setPrijsField("");
             controller.saveQuantity();
             latch.countDown();
         });
+
         latch.await(2, TimeUnit.SECONDS);
 
-        assertEquals("", controller.productName.getText());
-        assertEquals(0, testProduct.getQuantity());
-        verify(mockDatabase, never()).updateProduct(any());
+        assertEquals("", controller.getProductNaamField().getText());
+        assertEquals(5, testProduct.getQuantity());
+        assertEquals(0.0, testProduct.getPrice());
+        verify(mockDatabase).updateProduct(testProduct);
     }
 
     @Test
     void test_Case6() throws InterruptedException {
+        // Scenario: Nummers in aantalveld, Lege productnaam, Geeft product, Wel prijs
+        Product testProduct = new Product(1, "", 0, 10.0);
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Platform.runLater(() -> {
+            controller.setProduct(testProduct);
+            controller.getAantalField().setText("5");
+            controller.getProductNaamField().setText("Test Product");
+            controller.setPrijsField("10.0");
+            controller.saveQuantity();
+            latch.countDown();
+        });
+
+        latch.await(2, TimeUnit.SECONDS);
+
+        assertEquals("Test Product", controller.getProductNaamField().getText());
+        assertEquals(5, testProduct.getQuantity());
+        assertEquals(10.0, testProduct.getPrice());
+        verify(mockDatabase).updateProduct(testProduct);
+    }
+
+    @Test
+    void test_Case7() throws InterruptedException {
+        // Scenario: Nummers in aantalveld, Productnaam, Null, Lege prijs
         Product testProduct = new Product(1, "", 0, 0.0);
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
             controller.setProduct(testProduct);
-            controller.getAantalField().setText("10"); // Numeric value
+            controller.getAantalField().setText("5");
+            controller.getProductNaamField().setText("Test Product");
+            controller.setPrijsField("");
             controller.saveQuantity();
             latch.countDown();
         });
 
         latch.await(2, TimeUnit.SECONDS);
 
-        assertEquals("", controller.productName.getText());
-        assertEquals(10, testProduct.getQuantity());
-        verify(mockDatabase, times(1)).updateProduct(testProduct);
-    }
-
-    @Test
-    void test_Case7() throws InterruptedException {
-        Product testProduct = new Product(1, "Test Product", 0, 0.0);
-        CountDownLatch latch = new CountDownLatch(1);
-
-        Platform.runLater(() -> {
-            controller.setProduct(testProduct);
-            controller.getAantalField().setText("");
-            controller.saveQuantity();
-            latch.countDown();
-        });
-
-        latch.await(2, TimeUnit.SECONDS);
-
-        assertEquals("TEST PRODUCT", controller.productName.getText());
-        assertEquals(0, testProduct.getQuantity());
-        verify(mockDatabase, never()).updateProduct(any());
+        assertEquals("Test Product", controller.getProductNaamField().getText());
+        assertEquals(5, testProduct.getQuantity());
+        assertEquals(0.0, testProduct.getPrice());
+        verify(mockDatabase).updateProduct(testProduct);
     }
 
     @Test
     void test_Case8() throws InterruptedException {
-        Product testProduct = new Product(1, "Test Product", 0, 0.0);
+        // Scenario: Nummers in aantalveld, Productnaam, Geeft product, Wel prijs
+        Product testProduct = new Product(1, "", 0, 15.0);
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
             controller.setProduct(testProduct);
-            controller.getAantalField().setText("15"); // Numeric value
+            controller.getAantalField().setText("5");
+            controller.getProductNaamField().setText("Test Product");
+            controller.setPrijsField("15.0");
             controller.saveQuantity();
             latch.countDown();
         });
 
         latch.await(2, TimeUnit.SECONDS);
 
-        assertEquals("TEST PRODUCT", controller.productName.getText());
-        assertEquals(15, testProduct.getQuantity());
-        verify(mockDatabase, times(1)).updateProduct(testProduct);
+        assertEquals("Test Product", controller.getProductNaamField().getText());
+        assertEquals(5, testProduct.getQuantity());
+        assertEquals(15.0, testProduct.getPrice());
+        verify(mockDatabase).updateProduct(testProduct);
     }
-}
+
+
+    }
+

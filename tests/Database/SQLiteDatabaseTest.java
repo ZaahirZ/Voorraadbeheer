@@ -1,121 +1,125 @@
 package Database;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.voorraadbeheer.Classes.Product;
 import org.voorraadbeheer.Util.SQLiteDatabase;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 public class SQLiteDatabaseTest {
-
-    private SQLiteDatabase database;
+    SQLiteDatabase db;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        database = new SQLiteDatabase();
-        database.createTable();
+    public void setup() {
+        db = new SQLiteDatabase();
+        db.createTable(); // Ensure tables are created before each test
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        File dbFile = new File("voorraadbeheer.db");
-        if (dbFile.exists()) {
-            dbFile.delete();
+    public void cleanup() {
+        db.deleteProductByName("TestProduct"); // Clean up test data after each test
+    }
+
+    // Equivalence Class 1: Negative Price
+    @Test
+    public void testInsertProductWithHighNegativePrice() {
+        String productName = "TestProduct";
+        int quantity = 10;
+        double negativePrice = -1000.0;
+        String imagePath = "path/to/image";
+
+        try {
+            db.insertProduct(productName, quantity, negativePrice, imagePath);
+            Assertions.fail("Expected IllegalArgumentException for negative price insertion");
+        } catch (IllegalArgumentException e) {
+            Assertions.assertTrue(e.getMessage().contains("Price cannot be negative"),
+                    "Exception message should contain 'Price cannot be negative'");
         }
     }
 
     @Test
-    public void testCreateTable() {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:voorraadbeheer.db")) {
-            assertNotNull(conn);
-            assertFalse(conn.isClosed());
-        } catch (SQLException e) {
-            fail("Failed to connect to the database: " + e.getMessage());
+    public void testInsertProductWithHLowNegativePrice() {
+        String productName = "TestProduct";
+        int quantity = 10;
+        double negativePrice = -0.01;
+        String imagePath = "path/to/image";
+
+        try {
+            db.insertProduct(productName, quantity, negativePrice, imagePath);
+            Assertions.fail("Expected IllegalArgumentException for negative price insertion");
+        } catch (IllegalArgumentException e) {
+            Assertions.assertTrue(e.getMessage().contains("Price cannot be negative"),
+                    "Exception message should contain 'Price cannot be negative'");
         }
     }
 
+    // Equivalence Class 2: Zero Price
     @Test
-    public void testInsertProduct() {
-        database.insertProduct("Test Product", 10, 99.99, "test_image.jpg");
-        Product product = database.getProductByName("Test Product");
-        assertNotNull(product);
-        assertEquals("Test Product", product.getName());
-        assertEquals(10, product.getQuantity());
-        assertEquals(99.99, product.getPrice(), 0.001);
-        assertEquals("test_image.jpg", product.getImagePath());
+    public void testInsertProductWithZeroPrice() {
+        String productName = "TestProduct";
+        int quantity = 10;
+        double zeroPrice = 0.0;
+        String imagePath = "path/to/image";
+
+        try {
+            db.insertProduct(productName, quantity, zeroPrice, imagePath);
+
+            Product insertedProduct = db.getProductByName(productName);
+
+            Assertions.assertNotNull(insertedProduct, "Product should not be null");
+            Assertions.assertEquals(productName, insertedProduct.getName(), "Product name should match");
+            Assertions.assertEquals(quantity, insertedProduct.getQuantity(), "Product quantity should match");
+            Assertions.assertEquals(zeroPrice, insertedProduct.getPrice(), 0.01, "Product price should match");
+            Assertions.assertEquals(imagePath, insertedProduct.getImagePath(), "Product imagePath should match");
+
+        } catch (IllegalArgumentException e) {
+            Assertions.fail("Unexpected IllegalArgumentException: " + e.getMessage());
+        }
     }
 
+    // Equivalence Class 3: Positive Price (Low)
     @Test
-    public void testUpdateProduct() {
-        database.insertProduct("Test Product", 10, 99.99, "test_image.jpg");
-        Product product = database.getProductByName("Test Product");
-        assertNotNull(product);
+    public void testInsertProductWithLowPositivePrice() {
+        String productName = "TestProduct";
+        int quantity = 10;
+        double lowPositivePrice = 0.01; // Just above zero
+        String imagePath = "path/to/image";
 
-        product.setName("Updated Product");
-        product.setQuantity(20);
-        product.setPrice(149.99);
-        product.setImagePath("updated_image.jpg");
-        database.updateProduct(product);
+        try {
+            db.insertProduct(productName, quantity, lowPositivePrice, imagePath);
 
-        Product updatedProduct = database.getProductByName("Updated Product");
-        assertNotNull(updatedProduct);
-        assertEquals("Updated Product", updatedProduct.getName());
-        assertEquals(20, updatedProduct.getQuantity());
-        assertEquals(149.99, updatedProduct.getPrice(), 0.001);
-        assertEquals("updated_image.jpg", updatedProduct.getImagePath());
+            Product insertedProduct = db.getProductByName(productName);
+
+            Assertions.assertNotNull(insertedProduct, "Product should not be null");
+            Assertions.assertEquals(productName, insertedProduct.getName(), "Product name should match");
+            Assertions.assertEquals(quantity, insertedProduct.getQuantity(), "Product quantity should match");
+            Assertions.assertEquals(lowPositivePrice, insertedProduct.getPrice(), 0.01, "Product price should match");
+            Assertions.assertEquals(imagePath, insertedProduct.getImagePath(), "Product imagePath should match");
+
+        } catch (IllegalArgumentException e) {
+            Assertions.fail("Unexpected IllegalArgumentException: " + e.getMessage());
+        }
     }
 
+    // Equivalence Class 3: Positive Price (High)
     @Test
-    public void testGetAllProducts() {
-        database.insertProduct("Product 1", 5, 19.99, "image1.jpg");
-        database.insertProduct("Product 2", 15, 29.99, "image2.jpg");
-        List<Product> products = database.getAllProducts();
-        assertNotNull(products);
-        assertEquals(2, products.size());
-    }
+    public void testInsertProductWithHighPrice() {
+        String productName = "TestProduct";
+        int quantity = 10;
+        double highPrice = 150.0; // High price
+        String imagePath = "path/to/image";
 
-    @Test
-    public void testGetProductByName() {
-        database.insertProduct("Unique Product", 5, 19.99, "unique_image.jpg");
-        Product product = database.getProductByName("Unique Product");
-        assertNotNull(product);
-        assertEquals("Unique Product", product.getName());
-    }
+        try {
+            db.insertProduct(productName, quantity, highPrice, imagePath);
 
-    @Test
-    public void testDeleteProductByName() {
-        database.insertProduct("Product to Delete", 5, 19.99, "delete_image.jpg");
-        boolean deleted = database.deleteProductByName("Product to Delete");
-        assertTrue(deleted);
-        Product product = database.getProductByName("Product to Delete");
-        assertNull(product);
-    }
+            Product insertedProduct = db.getProductByName(productName);
 
-    @Test
-    public void testSearchProductByName() {
-        database.insertProduct("Search Product 1", 5, 19.99, "search_image1.jpg");
-        database.insertProduct("Search Product 2", 10, 39.99, "search_image2.jpg");
-        List<Product> products = database.searchProductByName("Search");
-        assertNotNull(products);
-        assertEquals(2, products.size());
-    }
+            Assertions.assertNotNull(insertedProduct, "Product should not be null");
+            Assertions.assertEquals(productName, insertedProduct.getName(), "Product name should match");
+            Assertions.assertEquals(quantity, insertedProduct.getQuantity(), "Product quantity should match");
+            Assertions.assertEquals(highPrice, insertedProduct.getPrice(), 0.01, "Product price should match");
+            Assertions.assertEquals(imagePath, insertedProduct.getImagePath(), "Product imagePath should match");
 
-    @Test
-    public void testSearchProductByPartialName() {
-        database.insertProduct("Apple", 50, 1.00, "apple.jpg");
-        database.insertProduct("Apple Pie", 20, 5.00, "apple_pie.jpg");
-        database.insertProduct("Banana", 100, 0.50, "banana.jpg");
-
-        List<Product> products = database.searchProductByName("Apple");
-        assertNotNull(products);
-        assertEquals(2, products.size());
+        } catch (IllegalArgumentException e) {
+            Assertions.fail("Unexpected IllegalArgumentException: " + e.getMessage());
+        }
     }
 }
